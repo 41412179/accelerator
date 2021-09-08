@@ -20,6 +20,8 @@ func NewRouter() *gin.Engine {
 	// 路由
 	v1 := r.Group("/api/v1")
 	{
+
+		v1.POST("getRoomToken", api.GetRoomToken)
 		v1.POST("ping", api.Ping)
 
 		// 用户登录
