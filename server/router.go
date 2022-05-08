@@ -3,7 +3,6 @@ package server
 import (
 	"accelerator/api"
 	"accelerator/middleware"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,8 +12,11 @@ func NewRouter() *gin.Engine {
 	r := gin.Default()
 
 	// 中间件, 顺序不能改
-	r.Use(middleware.Session(os.Getenv("SESSION_SECRET")))
-	r.Use(middleware.Cors())
+	// session信息
+	// r.Use(middleware.Session(os.Getenv("SESSION_SECRET")))
+	// 跨域问题
+	// r.Use(middleware.Cors())
+	// 获取当前用户
 	r.Use(middleware.CurrentUser())
 
 	// 路由

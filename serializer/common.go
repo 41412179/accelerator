@@ -33,6 +33,25 @@ const (
 	CodeParamErr = 40001
 )
 
+// errMap 错误码文案映射
+var errMap = map[int]string{
+	CodeDBError: "数据库操作失败",
+}
+
+//Text 错误码转换文案
+func Text(code int) string {
+	errMsg, ok := errMap[code]
+	if !ok {
+		return "未定义错误"
+	}
+	return errMsg
+}
+
+// NewErrorByCode 根据错误码生成error
+// func NewErrorByCode(code int) error {
+// 	return errs.New(code, Text(code))
+// }
+
 // CheckLogin 检查登录
 func CheckLogin() Response {
 	return Response{
@@ -46,6 +65,19 @@ func Err(errCode int, msg string, err error) Response {
 	res := Response{
 		Code: errCode,
 		Msg:  msg,
+	}
+	// 生产环境隐藏底层报错
+	if err != nil && gin.Mode() != gin.ReleaseMode {
+		res.Error = err.Error()
+	}
+	return res
+}
+
+// Err 通用错误处理
+func NewErr(errCode int, err error) Response {
+	res := Response{
+		Code: errCode,
+		Msg:  errMap[errCode],
 	}
 	// 生产环境隐藏底层报错
 	if err != nil && gin.Mode() != gin.ReleaseMode {

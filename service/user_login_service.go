@@ -1,41 +1,41 @@
 package service
 
 import (
-	"accelerator/model"
-	"accelerator/serializer"
+	// "accelerator/model"
 
-	"github.com/gin-contrib/sessions"
+	"accelerator/mysql"
+	"accelerator/serializer"
+	"accelerator/util"
+
 	"github.com/gin-gonic/gin"
 )
 
 // UserLoginService 管理用户登录的服务
 type UserLoginService struct {
-	UserName string `form:"user_name" json:"user_name" binding:"required,min=5,max=30"`
-	Password string `form:"password" json:"password" binding:"required,min=8,max=40"`
+	Email     string `form:"user_name" json:"user_name" binding:"required"`
+	ChannelId int64  `form:"channel_id" json:"channel_id" binding:"required"`
+	Source    string `form:"source" json:"source" binding:"required"`
 }
 
 // setSession 设置session
-func (service *UserLoginService) setSession(c *gin.Context, user model.Login) {
-	s := sessions.Default(c)
-	s.Clear()
-	s.Set("user_id", user.ID)
-	s.Save()
-}
+// func (service *UserLoginService) setSession(c *gin.Context, user table.Login) {
+// 	s := sessions.Default(c)
+// 	s.Clear()
+// 	s.Set("user_id", user.Id)
+// 	s.Save()
+// }
 
 // Login 用户登录函数
 func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
-	var user model.Login
-
-	if err := model.DB.Where("user_name = ?", service.UserName).First(&user).Error; err != nil {
-		return serializer.ParamErr("账号或密码错误", nil)
-	}
-
-	// if user.CheckPassword(service.Password) == false {
-	// 	return serializer.ParamErr("账号或密码错误", nil)
-	// }
 
 	// 设置session
-	service.setSession(c, user)
+	// service.setSession(c, user)
 
-	return serializer.BuildUserResponse(user)
+	user, err := mysql.GetLoginByEmail(service.Email)
+	if err != nil {
+		util.Log().Error("服务器错误: %s", err)
+		return serializer.NewErr(serializer.CodeDBError, err)
+	}
+
+	return serializer.BuildUserResponse(*user)
 }

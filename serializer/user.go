@@ -1,6 +1,8 @@
 package serializer
 
-import "accelerator/model"
+import (
+	"accelerator/entity/table"
+)
 
 // User 用户序列化器
 type User struct {
@@ -8,14 +10,14 @@ type User struct {
 }
 
 // BuildUser 序列化用户
-func BuildUser(user model.Login) User {
+func BuildUser(user table.User) User {
 	return User{
-		ID: user.ID,
+		ID: uint(user.Id),
 	}
 }
 
 // BuildUserResponse 序列化用户响应
-func BuildUserResponse(user model.Login) Response {
+func BuildUserResponse(user table.User) Response {
 	return Response{
 		Data: BuildUser(user),
 	}

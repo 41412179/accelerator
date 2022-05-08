@@ -1,7 +1,7 @@
 package conf
 
 import (
-	"accelerator/model"
+	"accelerator/entity/db"
 	"accelerator/util"
 	"os"
 
@@ -24,7 +24,7 @@ func Init() {
 	// 连接数据库
 	// sql := os.Getenv("MYSQL_DSN")
 	// fmt.Printf("sql=%s", sql)
-	model.Database(os.Getenv("MYSQL_DSN"))
+	db.Database(os.Getenv("MYSQL_DSN"))
 
 	// 预留redis，如果需要使用缓存，打开这行注释
 	// cache.Redis()
