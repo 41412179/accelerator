@@ -19,6 +19,7 @@ type UserService struct {
 	ChannelId    int64  `form:"channel_id" json:"channel_id" binding:"required"`
 	Source       string `form:"source" json:"source" binding:"required"`
 	orderService *OrderService
+	token        string
 }
 
 func NewUserService() *UserService {
@@ -59,21 +60,37 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 			return errcode.NewErr(errcode.CodeDBError, err)
 		}
 	}
-	// 如果存在，则查询需要的其他信息
+	// 如果存在，则查询剩余时间
 	remainingTime, err := u.orderService.GetRemainingTimeByUserId(user.ID)
 	if err != nil {
 		util.Log().Error("get remaining time by user id err: %v", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
-	// return response.BuildUserResponse(*user)
+	// 查询token
+	u.getTokenByUserID(user.ID)
 	return u.setRsponse(user, remainingTime)
+}
+
+func (u *UserService) getTokenByUserID(int64) {
+	token, err := mysql.GetTokenByUserID(int64)
+	if err != nil {
+		util.Log().Error("get token by user id err: %v", err)
+		return
+	}
+	u.token = token.Token
+
 }
 
 func (u *UserService) setRsponse(user *table.User, remainingTime int64) response.Response {
 	return response.Response{
 		Code: errcode.CodeSuccess,
 		Msg:  errcode.Text(errcode.CodeSuccess),
-		Data: nil,
+		Data: response.UserServiceRsp{
+			ID:            user.ID,
+			Email:         user.Email,
+			Token:         u.token,
+			RemainingTime: remainingTime,
+		},
 	}
 }
 
@@ -90,6 +107,7 @@ func (u *UserService) createToken(id int64) error {
 	token := new(table.Token)
 	token.UserId = id
 	token.Token = util.RandStringRunes(int(id))
+	u.token = token.Token
 	token.ExpireDate = time.Now().AddDate(1, 0, 0)
 	return mysql.InsertToken(token)
 

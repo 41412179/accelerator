@@ -12,3 +12,11 @@ func InsertToken(token *table.Token) error {
 	}
 	return nil
 }
+
+func GetTokenByUserID(userID int64) (*table.Token, error) {
+	var token table.Token
+	if err := db.DB.Where("user_id = ?", userID).First(&token).Error; err != nil {
+		return nil, err
+	}
+	return &token, nil
+}
