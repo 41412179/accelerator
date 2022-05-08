@@ -16,9 +16,7 @@ func GetUserByEmail(email string) (*table.User, error) {
 }
 
 // InsertUser insert user
-func InsertUser(user *table.User) error {
-	if err := db.DB.Create(user).Error; err != nil {
-		return err
-	}
-	return nil
+func InsertUser(user *table.User) (int64, error) {
+	result := db.DB.Create(user)
+	return result.RowsAffected, result.Error
 }
