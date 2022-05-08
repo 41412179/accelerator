@@ -1,8 +1,6 @@
 package service
 
 import (
-	// "accelerator/model"
-
 	"accelerator/entity/errcode"
 	"accelerator/entity/response"
 	"accelerator/entity/table"
@@ -63,6 +61,7 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 	return u.setRsponse(user, remainingTime)
 }
 
+// getTokenByUserID 根据用户id获取token
 func (u *UserService) getTokenByUserID(id int64) {
 	token, err := mysql.GetTokenByUserID(id)
 	if err != nil {
@@ -73,6 +72,7 @@ func (u *UserService) getTokenByUserID(id int64) {
 
 }
 
+// setRsponse 设置返回值
 func (u *UserService) setRsponse(user *table.User, remainingTime int64) response.Response {
 	return response.Response{
 		Code: errcode.CodeSuccess,
@@ -95,6 +95,7 @@ func (u *UserService) createNewUser() *table.User {
 	return user
 }
 
+// createToken 创建token
 func (u *UserService) createToken(id int64) error {
 	token := new(table.Token)
 	token.UserId = id
