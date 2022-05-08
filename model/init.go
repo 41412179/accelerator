@@ -1,9 +1,9 @@
 package model
 
 import (
+	"accelerator/util"
 	"log"
 	"os"
-	"singo/util"
 	"time"
 
 	"gorm.io/driver/mysql"

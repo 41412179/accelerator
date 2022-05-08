@@ -1,11 +1,11 @@
 package api
 
 import (
+	"accelerator/conf"
+	"accelerator/model"
+	"accelerator/serializer"
 	"encoding/json"
 	"fmt"
-	"singo/conf"
-	"singo/model"
-	"singo/serializer"
 
 	"github.com/gin-gonic/gin"
 	validator "gopkg.in/go-playground/validator.v8"

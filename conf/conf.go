@@ -1,10 +1,10 @@
 package conf
 
 import (
+	"accelerator/cache"
+	"accelerator/model"
+	"accelerator/util"
 	"os"
-	"singo/cache"
-	"singo/model"
-	"singo/util"
 
 	"github.com/joho/godotenv"
 )

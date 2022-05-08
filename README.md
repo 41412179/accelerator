@@ -1,14 +1,14 @@
-# Singo
+# accelerator
 
-Singo: Simple Single Golang Web Service
+accelerator: Simple Single Golang Web Service
 
-go-crud正式改名为Singo!
+go-crud正式改名为accelerator!
 
-使用Singo开发Web服务: 用最简单的架构，实现够用的框架，服务海量用户
+使用accelerator开发Web服务: 用最简单的架构，实现够用的框架，服务海量用户
 
-https://github.com/Gourouting/singo
+https://github.com/Gourouting/accelerator
 
-## Singo文档
+## accelerator文档
 
 https://gourouting.github.io/
 
@@ -16,11 +16,11 @@ https://gourouting.github.io/
 
 [让我们写个G站吧！Golang全栈编程实况](https://space.bilibili.com/10/channel/detail?cid=78794)
 
-## 使用Singo开发的项目实例
+## 使用accelerator开发的项目实例
 
 仿B站的G站：https://github.com/Gourouting/giligili
 
-Singo框架为移动端提供Token登录的案例: https://github.com/bydmm/singo-token-exmaple
+accelerator框架为移动端提供Token登录的案例: https://github.com/bydmm/accelerator-token-exmaple
 ## 目的
 
 本项目采用了一系列Golang中比较流行的组件，可以以本项目为基础快速搭建Restful Web API

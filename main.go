@@ -1,8 +1,8 @@
 package main
 
 import (
-	"singo/conf"
-	"singo/server"
+	"accelerator/conf"
+	"accelerator/server"
 )
 
 func main() {

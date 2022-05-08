@@ -1,9 +1,9 @@
 package server
 
 import (
+	"accelerator/api"
+	"accelerator/middleware"
 	"os"
-	"singo/api"
-	"singo/middleware"
 
 	"github.com/gin-gonic/gin"
 )
