@@ -3,6 +3,7 @@ package service
 import (
 	// "accelerator/model"
 
+	"accelerator/entity/table"
 	"accelerator/mysql"
 	"accelerator/serializer"
 	"accelerator/util"
@@ -26,16 +27,35 @@ type UserLoginService struct {
 // }
 
 // Login 用户登录函数
-func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
+func (u *UserLoginService) Login(c *gin.Context) serializer.Response {
 
 	// 设置session
 	// service.setSession(c, user)
 
-	user, err := mysql.GetUserByEmail(service.Email)
+	user, err := mysql.GetUserByEmail(u.Email)
 	if err != nil {
 		util.Log().Error("服务器错误: %s", err)
 		return serializer.NewErr(serializer.CodeDBError, err)
 	}
-
+	// 判断用户是否存在
+	if user.Id == 0 {
+		user := u.createNewUser()
+		err := mysql.InsertUser(user)
+		if err != nil {
+			util.Log().Error("服务器错误: %s", err)
+			return serializer.NewErr(serializer.CodeDBError, err)
+		}
+	}
+	// 如果存在，则返回信息
 	return serializer.BuildUserResponse(*user)
+}
+
+// createNewUser 创建新用户
+func (u *UserLoginService) createNewUser() *table.User {
+	user := new(table.User)
+	user.Email = u.Email
+	user.ChannelId = u.ChannelId
+	user.Source = u.Source
+
+	return user
 }

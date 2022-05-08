@@ -14,3 +14,11 @@ func GetUserByEmail(email string) (*table.User, error) {
 	}
 	return &user, nil
 }
+
+// InsertUser insert user
+func InsertUser(user *table.User) error {
+	if err := db.DB.Create(user).Error; err != nil {
+		return err
+	}
+	return nil
+}
