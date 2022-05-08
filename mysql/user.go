@@ -20,3 +20,12 @@ func InsertUser(user *table.User) (int64, error) {
 	result := db.DB.Create(user)
 	return result.RowsAffected, result.Error
 }
+
+// GetUserByID get user by id
+func GetUserByID(id int64) (*table.User, error) {
+	var user table.User
+	if err := db.DB.Where("id = ?", id).First(&user).Error; err != nil {
+		return nil, err
+	}
+	return &user, nil
+}

@@ -20,3 +20,11 @@ func GetTokenByUserID(userID int64) (*table.Token, error) {
 	}
 	return &token, nil
 }
+
+func GetToken(token string) (*table.Token, error) {
+	var tokenInfo table.Token
+	if err := db.DB.Where("token = ?", token).First(&tokenInfo).Error; err != nil {
+		return nil, err
+	}
+	return &tokenInfo, nil
+}
