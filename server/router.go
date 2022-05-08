@@ -21,22 +21,19 @@ func NewRouter() *gin.Engine {
 	v1 := r.Group("/api/v1")
 	{
 
-		v1.POST("getRoomToken", api.GetRoomToken)
+		// 服务健康检测
 		v1.POST("ping", api.Ping)
-
-		// 用户登录
-		v1.POST("user/register", api.UserRegister)
 
 		// 用户登录
 		v1.POST("user/login", api.UserLogin)
 
-		// 需要登录保护的
+		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
 		{
 			// User Routing
-			auth.GET("user/me", api.UserMe)
-			auth.DELETE("user/logout", api.UserLogout)
+			// auth.GET("user/me", api.UserMe)
+			// auth.DELETE("user/logout", api.UserLogout)
 		}
 	}
 	return r

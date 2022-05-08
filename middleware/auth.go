@@ -27,7 +27,7 @@ func CurrentUser() gin.HandlerFunc {
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		if user, _ := c.Get("user"); user != nil {
-			if _, ok := user.(*model.User); ok {
+			if _, ok := user.(*model.Login); ok {
 				c.Next()
 				return
 			}

@@ -15,7 +15,7 @@ type UserLoginService struct {
 }
 
 // setSession 设置session
-func (service *UserLoginService) setSession(c *gin.Context, user model.User) {
+func (service *UserLoginService) setSession(c *gin.Context, user model.Login) {
 	s := sessions.Default(c)
 	s.Clear()
 	s.Set("user_id", user.ID)
@@ -24,15 +24,15 @@ func (service *UserLoginService) setSession(c *gin.Context, user model.User) {
 
 // Login 用户登录函数
 func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
-	var user model.User
+	var user model.Login
 
 	if err := model.DB.Where("user_name = ?", service.UserName).First(&user).Error; err != nil {
 		return serializer.ParamErr("账号或密码错误", nil)
 	}
 
-	if user.CheckPassword(service.Password) == false {
-		return serializer.ParamErr("账号或密码错误", nil)
-	}
+	// if user.CheckPassword(service.Password) == false {
+	// 	return serializer.ParamErr("账号或密码错误", nil)
+	// }
 
 	// 设置session
 	service.setSession(c, user)
