@@ -3,10 +3,10 @@ package service
 import (
 	// "accelerator/model"
 
+	"accelerator/entity/errcode"
 	"accelerator/entity/response"
 	"accelerator/entity/table"
 	"accelerator/mysql"
-	"accelerator/serializer"
 	"accelerator/util"
 
 	"github.com/gin-gonic/gin"
@@ -36,7 +36,7 @@ func (u *UserLoginService) Login(c *gin.Context) response.Response {
 	user, err := mysql.GetUserByEmail(u.Email)
 	if err != nil {
 		util.Log().Error("服务器错误: %s", err)
-		return serializer.NewErr(serializer.CodeDBError, err)
+		return errcode.NewErr(errcode.CodeDBError, err)
 	}
 	// 判断用户是否存在
 	if user.Id == 0 {
@@ -44,7 +44,7 @@ func (u *UserLoginService) Login(c *gin.Context) response.Response {
 		err := mysql.InsertUser(user)
 		if err != nil {
 			util.Log().Error("服务器错误: %s", err)
-			return serializer.NewErr(serializer.CodeDBError, err)
+			return errcode.NewErr(errcode.CodeDBError, err)
 		}
 	}
 	// 如果存在，则查询需要的其他信息
@@ -58,6 +58,5 @@ func (u *UserLoginService) createNewUser() *table.User {
 	user.Email = u.Email
 	user.ChannelId = u.ChannelId
 	user.Source = u.Source
-
 	return user
 }

@@ -2,7 +2,8 @@ package middleware
 
 import (
 	"accelerator/entity/table"
-	"accelerator/serializer"
+
+	"accelerator/entity/errcode"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -33,7 +34,7 @@ func AuthRequired() gin.HandlerFunc {
 			}
 		}
 
-		c.JSON(200, serializer.CheckLogin())
+		c.JSON(200, errcode.CheckLogin())
 		c.Abort()
 	}
 }

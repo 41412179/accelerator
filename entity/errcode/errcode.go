@@ -1,4 +1,4 @@
-package serializer
+package errcode
 
 import (
 	"accelerator/entity/response"
