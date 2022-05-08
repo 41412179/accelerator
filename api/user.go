@@ -1,7 +1,7 @@
 package api
 
 import (
-	"accelerator/serializer"
+	"accelerator/entity/response"
 	"accelerator/service"
 
 	"github.com/gin-contrib/sessions"
@@ -24,7 +24,7 @@ func UserLogout(c *gin.Context) {
 	s := sessions.Default(c)
 	s.Clear()
 	s.Save()
-	c.JSON(200, serializer.Response{
+	c.JSON(200, response.Response{
 		Code: 0,
 		Msg:  "登出成功",
 	})
