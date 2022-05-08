@@ -28,14 +28,6 @@ func NewUserService() *UserService {
 	}
 }
 
-// setSession 设置session
-// func (service *UserLoginService) setSession(c *gin.Context, user table.Login) {
-// 	s := sessions.Default(c)
-// 	s.Clear()
-// 	s.Set("user_id", user.Id)
-// 	s.Save()
-// }
-
 // Login 用户登录函数
 func (u *UserService) Login(c *gin.Context) response.Response {
 
@@ -71,8 +63,8 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 	return u.setRsponse(user, remainingTime)
 }
 
-func (u *UserService) getTokenByUserID(int64) {
-	token, err := mysql.GetTokenByUserID(int64)
+func (u *UserService) getTokenByUserID(id int64) {
+	token, err := mysql.GetTokenByUserID(id)
 	if err != nil {
 		util.Log().Error("get token by user id err: %v", err)
 		return
