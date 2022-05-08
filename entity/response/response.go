@@ -8,6 +8,16 @@ type Response struct {
 	Error string      `json:"error,omitempty"`
 }
 
+// NewResponse 创建rsponse
+func NewResponse(code int, data interface{}, msg string) Response {
+	return Response{
+		Code:  code,
+		Data:  data,
+		Msg:   msg,
+		Error: "",
+	}
+}
+
 // TrackedErrorResponse 有追踪信息的错误响应
 type TrackedErrorResponse struct {
 	Response

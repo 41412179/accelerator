@@ -21,11 +21,18 @@ const (
 	CodeEncryptError = 50002
 	//CodeParamErr 各种奇奇怪怪的参数错误
 	CodeParamErr = 40001
+	// CodeSuccess 成功
+	CodeSuccess = 0
 )
 
 // errMap 错误码文案映射
 var errMap = map[int]string{
-	CodeDBError: "数据库操作失败",
+	CodeDBError:      "数据库操作失败",
+	CodeEncryptError: "加密失败",
+	CodeParamErr:     "参数错误",
+	CodeSuccess:      "成功",
+	CodeCheckLogin:   "未登录",
+	CodeNoRightErr:   "未授权访问",
 }
 
 //Text 错误码转换文案

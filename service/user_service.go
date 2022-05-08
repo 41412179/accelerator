@@ -13,11 +13,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// UserLoginService 管理用户登录的服务
-type UserLoginService struct {
-	Email     string `form:"user_name" json:"user_name" binding:"required"`
-	ChannelId int64  `form:"channel_id" json:"channel_id" binding:"required"`
-	Source    string `form:"source" json:"source" binding:"required"`
+// UserService 管理用户登录的服务
+type UserService struct {
+	Email        string `form:"user_name" json:"user_name" binding:"required"`
+	ChannelId    int64  `form:"channel_id" json:"channel_id" binding:"required"`
+	Source       string `form:"source" json:"source" binding:"required"`
+	orderService *OrderService
+}
+
+func NewUserService() *UserService {
+	return &UserService{
+		orderService: NewOrderService(),
+	}
 }
 
 // setSession 设置session
@@ -29,7 +36,7 @@ type UserLoginService struct {
 // }
 
 // Login 用户登录函数
-func (u *UserLoginService) Login(c *gin.Context) response.Response {
+func (u *UserService) Login(c *gin.Context) response.Response {
 
 	// 设置session
 	// service.setSession(c, user)
@@ -53,12 +60,25 @@ func (u *UserLoginService) Login(c *gin.Context) response.Response {
 		}
 	}
 	// 如果存在，则查询需要的其他信息
+	remainingTime, err := u.orderService.GetRemainingTimeByUserId(user.ID)
+	if err != nil {
+		util.Log().Error("get remaining time by user id err: %v", err)
+		return errcode.NewErr(errcode.CodeDBError, err)
+	}
+	// return response.BuildUserResponse(*user)
+	return u.setRsponse(user, remainingTime)
+}
 
-	return response.BuildUserResponse(*user)
+func (u *UserService) setRsponse(user *table.User, remainingTime int64) response.Response {
+	return response.Response{
+		Code: errcode.CodeSuccess,
+		Msg:  errcode.Text(errcode.CodeSuccess),
+		Data: nil,
+	}
 }
 
 // createNewUser 创建新用户
-func (u *UserLoginService) createNewUser() *table.User {
+func (u *UserService) createNewUser() *table.User {
 	user := new(table.User)
 	user.Email = u.Email
 	user.ChannelId = u.ChannelId
@@ -66,7 +86,7 @@ func (u *UserLoginService) createNewUser() *table.User {
 	return user
 }
 
-func (u *UserLoginService) createToken(id int64) error {
+func (u *UserService) createToken(id int64) error {
 	token := new(table.Token)
 	token.UserId = id
 	token.Token = util.RandStringRunes(int(id))
