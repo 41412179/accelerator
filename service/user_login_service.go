@@ -31,7 +31,7 @@ func (service *UserLoginService) Login(c *gin.Context) serializer.Response {
 	// 设置session
 	// service.setSession(c, user)
 
-	user, err := mysql.GetLoginByEmail(service.Email)
+	user, err := mysql.GetUserByEmail(service.Email)
 	if err != nil {
 		util.Log().Error("服务器错误: %s", err)
 		return serializer.NewErr(serializer.CodeDBError, err)
