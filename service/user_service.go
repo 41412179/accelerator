@@ -36,20 +36,24 @@ func (u *UserLoginService) Login(c *gin.Context) response.Response {
 
 	user, err := mysql.GetUserByEmail(u.Email)
 	if err != nil {
-		util.Log().Error("服务器错误: %s", err)
+		util.Log().Error("get user by email err: %s", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
 	// 判断用户是否存在
-	if user.Id == 0 {
+	if user.ID == 0 {
 		user := u.createNewUser()
 		id, err := mysql.InsertUser(user)
 		if err != nil {
-			util.Log().Error("服务器错误: %s", err)
+			util.Log().Error("insert user err: %v", err)
 			return errcode.NewErr(errcode.CodeDBError, err)
 		}
-		u.createToken(id)
+		if err := u.createToken(id); err != nil {
+			util.Log().Error("create token err: %v", err)
+			return errcode.NewErr(errcode.CodeDBError, err)
+		}
 	}
 	// 如果存在，则查询需要的其他信息
+
 	return response.BuildUserResponse(*user)
 }
 
@@ -66,7 +70,7 @@ func (u *UserLoginService) createToken(id int64) error {
 	token := new(table.Token)
 	token.UserId = id
 	token.Token = util.RandStringRunes(int(id))
-	token.ExpireTime = time.Now().AddDate(1, 0, 0)
+	token.ExpireDate = time.Now().AddDate(1, 0, 0)
 	return mysql.InsertToken(token)
 
 }

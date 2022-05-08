@@ -10,7 +10,7 @@ type User struct {
 // BuildUser 序列化用户
 func BuildUser(user table.User) User {
 	return User{
-		ID: uint(user.Id),
+		ID: uint(user.ID),
 	}
 }
 
