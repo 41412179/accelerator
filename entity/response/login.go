@@ -1,8 +1,6 @@
-package serializer
+package response
 
-import (
-	"accelerator/entity/table"
-)
+import "accelerator/entity/table"
 
 // User 用户序列化器
 type User struct {

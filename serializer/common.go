@@ -1,20 +1,10 @@
 package serializer
 
-import "github.com/gin-gonic/gin"
+import (
+	"accelerator/entity/response"
 
-// Response 基础序列化器
-type Response struct {
-	Code  int         `json:"code"`
-	Data  interface{} `json:"data,omitempty"`
-	Msg   string      `json:"msg"`
-	Error string      `json:"error,omitempty"`
-}
-
-// TrackedErrorResponse 有追踪信息的错误响应
-type TrackedErrorResponse struct {
-	Response
-	TrackID string `json:"track_id"`
-}
+	"github.com/gin-gonic/gin"
+)
 
 // 三位数错误编码为复用http原本含义
 // 五位数错误编码为应用自定义错误
@@ -53,16 +43,16 @@ func Text(code int) string {
 // }
 
 // CheckLogin 检查登录
-func CheckLogin() Response {
-	return Response{
+func CheckLogin() response.Response {
+	return response.Response{
 		Code: CodeCheckLogin,
 		Msg:  "未登录",
 	}
 }
 
 // Err 通用错误处理
-func Err(errCode int, msg string, err error) Response {
-	res := Response{
+func Err(errCode int, msg string, err error) response.Response {
+	res := response.Response{
 		Code: errCode,
 		Msg:  msg,
 	}
@@ -74,8 +64,8 @@ func Err(errCode int, msg string, err error) Response {
 }
 
 // Err 通用错误处理
-func NewErr(errCode int, err error) Response {
-	res := Response{
+func NewErr(errCode int, err error) response.Response {
+	res := response.Response{
 		Code: errCode,
 		Msg:  errMap[errCode],
 	}
@@ -87,7 +77,7 @@ func NewErr(errCode int, err error) Response {
 }
 
 // DBErr 数据库操作失败
-func DBErr(msg string, err error) Response {
+func DBErr(msg string, err error) response.Response {
 	if msg == "" {
 		msg = "数据库操作失败"
 	}
@@ -95,7 +85,7 @@ func DBErr(msg string, err error) Response {
 }
 
 // ParamErr 各种参数错误
-func ParamErr(msg string, err error) Response {
+func ParamErr(msg string, err error) response.Response {
 	if msg == "" {
 		msg = "参数错误"
 	}

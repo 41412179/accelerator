@@ -3,6 +3,7 @@ package service
 import (
 	// "accelerator/model"
 
+	"accelerator/entity/response"
 	"accelerator/entity/table"
 	"accelerator/mysql"
 	"accelerator/serializer"
@@ -27,7 +28,7 @@ type UserLoginService struct {
 // }
 
 // Login 用户登录函数
-func (u *UserLoginService) Login(c *gin.Context) serializer.Response {
+func (u *UserLoginService) Login(c *gin.Context) response.Response {
 
 	// 设置session
 	// service.setSession(c, user)
@@ -46,8 +47,9 @@ func (u *UserLoginService) Login(c *gin.Context) serializer.Response {
 			return serializer.NewErr(serializer.CodeDBError, err)
 		}
 	}
-	// 如果存在，则返回信息
-	return serializer.BuildUserResponse(*user)
+	// 如果存在，则查询需要的其他信息
+
+	return response.BuildUserResponse(*user)
 }
 
 // createNewUser 创建新用户
