@@ -61,6 +61,7 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 		util.Log().Error("get remaining time by user id err: %v", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
+
 	// 查询token
 	u.getTokenByUserID(user.ID)
 	return u.setRsponse(user, remainingTime)
@@ -122,9 +123,8 @@ func (u *UserService) createNewUser() *table.User {
 func (u *UserService) createToken(id int64) error {
 	token := new(table.Token)
 	token.UserId = id
-	token.Token = util.RandStringRunes(int(id))
+	token.Token = util.TokenByMD5(u.Email, u.Email, 5)
 	u.token = token.Token
 	token.ExpireDate = time.Now().AddDate(1, 0, 0)
 	return mysql.InsertToken(token)
-
 }

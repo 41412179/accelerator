@@ -29,3 +29,16 @@ func UserLogout(c *gin.Context) {
 		Msg:  "登出成功",
 	})
 }
+
+func GetNodes(c *gin.Context) {
+	var service service.NodeService
+	// res := service.GetNodes(c)
+	// c.JSON(200, res)
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetNodes(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

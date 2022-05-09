@@ -34,8 +34,7 @@ func NewRouter() *gin.Engine {
 		auth.Use(middleware.AuthRequired())
 		{
 			// User Routing
-			// auth.GET("user/me", api.UserMe)
-			// auth.DELETE("user/logout", api.UserLogout)
+			auth.GET("nodes", api.GetNodes)
 		}
 	}
 	return r
