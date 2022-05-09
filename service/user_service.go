@@ -13,7 +13,7 @@ import (
 
 // UserService 管理用户登录的服务
 type UserService struct {
-	Email        string `form:"user_name" json:"user_name" binding:"required"`
+	Email        string `form:"email" json:"email" binding:"required"`
 	ChannelId    int64  `form:"channel_id" json:"channel_id" binding:"required"`
 	Source       string `form:"source" json:"source" binding:"required"`
 	orderService *OrderService
