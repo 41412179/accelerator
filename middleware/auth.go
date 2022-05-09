@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"accelerator/entity/response"
 	"accelerator/entity/table"
 	"accelerator/mysql"
 
@@ -43,7 +44,15 @@ func AuthRequired() gin.HandlerFunc {
 			}
 		}
 
-		c.JSON(200, errcode.CheckLogin())
+		c.JSON(200, CheckLogin())
 		c.Abort()
+	}
+}
+
+// CheckLogin 检查登录
+func CheckLogin() response.Response {
+	return response.Response{
+		Code: errcode.CodeCheckLogin,
+		Msg:  errcode.Text(errcode.CodeCheckLogin),
 	}
 }

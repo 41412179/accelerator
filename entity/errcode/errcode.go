@@ -49,14 +49,6 @@ func Text(code int) string {
 // 	return errs.New(code, Text(code))
 // }
 
-// CheckLogin 检查登录
-func CheckLogin() response.Response {
-	return response.Response{
-		Code: CodeCheckLogin,
-		Msg:  "未登录",
-	}
-}
-
 // Err 通用错误处理
 func Err(errCode int, msg string, err error) response.Response {
 	res := response.Response{
