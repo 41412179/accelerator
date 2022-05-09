@@ -12,5 +12,9 @@ type Order struct {
 	EndTime   time.Time `gorm:"column:end_time" db:"end_time" json:"end_time" form:"end_time"`         //  订单结束时间
 	CreatedAt time.Time `gorm:"column:created_at" db:"created_at" json:"created_at" form:"created_at"`
 	UpdatedAt time.Time `gorm:"column:updated_at" db:"updated_at" json:"updated_at" form:"updated_at"`
-	DeletedAt time.Time `gorm:"column:deleted_at" db:"deleted_at" json:"deleted_at" form:"deleted_at"`
+}
+
+// TableName 会将 Order 的表名重写为 `order`
+func (Order) TableName() string {
+	return "order"
 }

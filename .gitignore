@@ -2,3 +2,4 @@
 .env
 go.sum
 accelerator
+__debug_bin

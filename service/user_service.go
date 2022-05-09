@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // UserService 管理用户登录的服务
@@ -33,12 +34,9 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 	// service.setSession(c, user)
 
 	user, err := mysql.GetUserByEmail(u.Email)
-	if err != nil {
-		util.Log().Error("get user by email err: %s", err)
-		return errcode.NewErr(errcode.CodeDBError, err)
-	}
+
 	// 判断用户是否存在
-	if user.ID == 0 {
+	if err == gorm.ErrRecordNotFound {
 		user := u.createNewUser()
 		id, err := mysql.InsertUser(user)
 		if err != nil {
@@ -50,6 +48,13 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 			return errcode.NewErr(errcode.CodeDBError, err)
 		}
 	}
+
+	// 如果异常
+	if err != nil {
+		util.Log().Error("get user by email err: %v", err)
+		return errcode.NewErr(errcode.CodeDBError, err)
+	}
+
 	// 如果存在，则查询剩余时间
 	remainingTime, err := u.orderService.GetRemainingTimeByUserId(user.ID)
 	if err != nil {
@@ -62,13 +67,31 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 }
 
 // getTokenByUserID 根据用户id获取token
-func (u *UserService) getTokenByUserID(id int64) {
+func (u *UserService) getTokenByUserID(id int64) error {
 	token, err := mysql.GetTokenByUserID(id)
+
+	// 如果不存在就创建
+	if err == gorm.ErrRecordNotFound {
+		if err := u.createToken(id); err != nil {
+			util.Log().Error("create token err: %v", err)
+			return err
+		}
+	}
+	// 如果异常
 	if err != nil {
 		util.Log().Error("get token by user id err: %v", err)
-		return
+		return err
+	}
+	// 如果过期就续期
+	if token.ExpireDate.Before(time.Now()) {
+		token.ExpireDate = time.Now().AddDate(1, 0, 0)
+		if err := mysql.UpdateToken(token); err != nil {
+			util.Log().Error("update token err: %v", err)
+			return err
+		}
 	}
 	u.token = token.Token
+	return nil
 
 }
 

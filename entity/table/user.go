@@ -11,5 +11,9 @@ type User struct {
 	Source    string    `gorm:"column:source" db:"source" json:"source" form:"source"`                 //  来源：android
 	CreatedAt time.Time `gorm:"column:created_at" db:"created_at" json:"created_at" form:"created_at"`
 	UpdatedAt time.Time `gorm:"column:updated_at" db:"updated_at" json:"updated_at" form:"updated_at"`
-	DeletedAt time.Time `gorm:"column:deleted_at" db:"deleted_at" json:"deleted_at" form:"deleted_at"`
+}
+
+// TableName 会将 User 的表名重写为 `user`
+func (User) TableName() string {
+	return "user"
 }
