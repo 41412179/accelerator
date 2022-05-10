@@ -23,6 +23,9 @@ const (
 	CodeParamErr = 40001
 	// CodeSuccess 成功
 	CodeSuccess = 0
+
+	// CodeNodeNotExist 节点不存在
+	CodeNodeNotExist = 20001
 )
 
 // errMap 错误码文案映射
