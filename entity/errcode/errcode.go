@@ -36,6 +36,7 @@ var errMap = map[int]string{
 	CodeSuccess:      "成功",
 	CodeCheckLogin:   "未登录",
 	CodeNoRightErr:   "未授权访问",
+	CodeNodeNotExist: "节点不存在",
 }
 
 //Text 错误码转换文案
