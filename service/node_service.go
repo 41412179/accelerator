@@ -34,6 +34,7 @@ func (n *NodeService) GetNodes(c *gin.Context) response.Response {
 	return n.setRsponse(nodes)
 }
 
+// setRsponse 设置返回结果
 func (n *NodeService) setRsponse(nodes []*table.Node) response.Response {
 	var rsponse response.Response
 	rsponse.Code = errcode.CodeSuccess

@@ -30,10 +30,9 @@ func UserLogout(c *gin.Context) {
 	})
 }
 
+// GetNodes 获取节点列表
 func GetNodes(c *gin.Context) {
 	var service service.NodeService
-	// res := service.GetNodes(c)
-	// c.JSON(200, res)
 
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetNodes(c)
