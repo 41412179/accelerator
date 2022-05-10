@@ -17,6 +17,7 @@ type UserService struct {
 	Email        string `form:"email" json:"email" binding:"required,email"`
 	ChannelId    int64  `form:"channel_id" json:"channel_id" binding:"required"`
 	Source       string `form:"source" json:"source" binding:"required"`
+	InviterId    int64  `form:"inviter_id" json:"inviter_id"`
 	orderService *OrderService
 	token        string
 }
