@@ -29,6 +29,9 @@ func NewRouter() *gin.Engine {
 		// 用户登录
 		v1.POST("user/login", api.UserLogin)
 
+		// 套餐列表
+		v1.POST("good/list", api.GoodList)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())

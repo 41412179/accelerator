@@ -41,3 +41,14 @@ func GetNodes(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+func GoodList(c *gin.Context) {
+	var service service.GoodService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetGoods(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
