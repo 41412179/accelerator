@@ -38,6 +38,7 @@ func NewRouter() *gin.Engine {
 		{
 			// User Routing
 			auth.GET("nodes", api.GetNodes)
+			//
 		}
 	}
 	return r
