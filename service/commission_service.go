@@ -39,7 +39,7 @@ func (c *CommissionService) GetCommissionByUser(g *gin.Context) response.Respons
 
 type CommissionData struct {
 	CommessionAmount float64
-	number           int
+	Number           int
 }
 
 // generateData 生成数据
@@ -50,7 +50,7 @@ func (c *CommissionService) generateData(commissions []*table.Commission) Commis
 		data.CommessionAmount += commission.Change
 	}
 
-	data.number = len(commissions)
+	data.Number = len(commissions)
 	return data
 
 }
