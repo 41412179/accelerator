@@ -3,6 +3,7 @@ package api
 import (
 	"accelerator/entity/response"
 	"accelerator/service"
+	"accelerator/util"
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -59,6 +60,7 @@ func CreateOrder(c *gin.Context) {
 	var service service.OrderService
 
 	if err := c.ShouldBind(&service); err == nil {
+		util.Log().Info("bind order service: %+v", service)
 		res := service.CreateOrder(c)
 		c.JSON(200, res)
 	} else {

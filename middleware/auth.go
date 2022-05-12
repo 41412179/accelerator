@@ -4,6 +4,7 @@ import (
 	"accelerator/entity/response"
 	"accelerator/entity/table"
 	"accelerator/mysql"
+	"accelerator/util"
 
 	"accelerator/entity/errcode"
 
@@ -27,7 +28,7 @@ func CurrentUser() gin.HandlerFunc {
 
 		user, err := mysql.GetUserByID(uid)
 		if err == nil {
-			c.Set("user", &user)
+			c.Set("user", user)
 		}
 
 		c.Next()
@@ -37,12 +38,14 @@ func CurrentUser() gin.HandlerFunc {
 // AuthRequired 需要登录
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		if user, _ := c.Get("user"); user != nil {
+		if user, ok := c.Get("user"); ok {
 			if _, ok := user.(*table.User); ok {
-				c.Next()
+				util.Log().Debug("user has logined")
+				// c.Next()
 				return
 			}
 		} else {
+			util.Log().Debug("user not logined, user: %v", user)
 			c.JSON(200, CheckLogin())
 			c.Abort()
 		}

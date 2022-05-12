@@ -38,7 +38,7 @@ func NewRouter() *gin.Engine {
 		{
 			// User Routing
 			auth.GET("nodes", api.GetNodes)
-			//
+			// create order
 			auth.POST("order", api.CreateOrder)
 		}
 	}

@@ -13,9 +13,9 @@ import (
 
 // OrderService 订单服务
 type OrderService struct {
-	GoodID    int64  `json:"good_id"`
-	PayType   string `json:"pay_type"`
-	ChannelID int64  `json:"channel_id"`
+	GoodID    int64  `form:"good_id" json:"good_id" binding:"required"`
+	PayType   string `form:"pay_type" json:"pay_type" binding:"required"`
+	ChannelID int64  `form:"channel_id" json:"channel_id" binding:"required"`
 	user      *table.User
 }
 
@@ -45,6 +45,7 @@ func (o *OrderService) CreateOrder(c *gin.Context) response.Response {
 	// 获取用户
 	user := util.GetUserByCtx(c)
 	if user == nil {
+		util.Log().Error("user not logined, user: %v", user)
 		return errcode.NewErr(errcode.CodeCheckLogin, nil)
 	}
 	o.user = user
@@ -76,7 +77,7 @@ func (o *OrderService) setRsponse() response.Response {
 func (o *OrderService) generateOrder() *table.Order {
 	good, err := mysql.GetGoodByID(o.GoodID)
 	if err != nil {
-		util.Log().Error("get nodes by good id err: %+v", err)
+		util.Log().Error("get good by id err: %+v", err)
 		return nil
 	}
 	order := new(table.Order)
