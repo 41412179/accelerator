@@ -42,11 +42,24 @@ func GetNodes(c *gin.Context) {
 	}
 }
 
+// GoodList 获取套餐列表
 func GoodList(c *gin.Context) {
 	var service service.GoodService
 
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetGoods(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// CreateOrder 创建订单
+func CreateOrder(c *gin.Context) {
+	var service service.OrderService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.CreateOrder(c)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))

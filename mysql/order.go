@@ -18,3 +18,10 @@ func GetOrdersByUserID(userID int64) ([]table.Order, error) {
 	}
 	return orders, nil
 }
+
+func InsertOrder(order *table.Order) (int64, error) {
+	if err := db.DB.Create(order).Error; err != nil {
+		return 0, err
+	}
+	return order.Id, nil
+}

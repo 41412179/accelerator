@@ -18,7 +18,7 @@ func CurrentUser() gin.HandlerFunc {
 		if ok {
 			t, err := mysql.GetToken(token)
 			if err != nil {
-				c.JSON(200, errcode.Err(errcode.CodeDBError, errcode.Text(errcode.CodeDBError), err))
+				c.JSON(200, errcode.NewErr(errcode.CodeDBError, err))
 				c.Abort()
 				return
 			}

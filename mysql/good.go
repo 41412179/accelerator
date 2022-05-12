@@ -11,3 +11,9 @@ func GetGoods() ([]*table.Good, error) {
 	err := db.DB.Find(&goods).Error
 	return goods, err
 }
+
+func GetGoodByID(id int64) (*table.Good, error) {
+	var good table.Good
+	err := db.DB.Where("id = ?", id).First(&good).Error
+	return &good, err
+}
