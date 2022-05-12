@@ -4,6 +4,13 @@ import (
 	"time"
 )
 
+const (
+	// 增加佣金
+	AddCommissionType = 0
+	// 减少佣金
+	SubCommissionType = 1
+)
+
 type Commission struct {
 	Id        int64     `gorm:"column:id;type:bigint(20);primary_key;AUTO_INCREMENT" json:"id"`
 	OrderId   int64     `gorm:"column:order_id;type:bigint(20);NOT NULL" json:"order_id"`

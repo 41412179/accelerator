@@ -68,6 +68,7 @@ func CreateOrder(c *gin.Context) {
 	}
 }
 
+// GetCommissionByUser 获取用户佣金
 func GetCommissionByUser(c *gin.Context) {
 	var service service.CommissionService
 

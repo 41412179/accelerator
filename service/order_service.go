@@ -57,12 +57,31 @@ func (o *OrderService) CreateOrder(c *gin.Context) response.Response {
 	}
 
 	// 创建订单
-	_, err := mysql.InsertOrder(order)
+	id, err := mysql.InsertOrder(order)
 	if err != nil {
 		util.Log().Error("insert order err: %+v", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
+	// 计算佣金
+	go o.computerCommission(id, order)
 	return o.setRsponse()
+
+}
+
+// computerCommission 计算佣金
+func (o *OrderService) computerCommission(orderId int64, order *table.Order) {
+	// 计算佣金
+	c := new(table.Commission)
+	c.UserId = o.user.InviterId
+	c.OrderId = orderId
+	c.Type = table.AddCommissionType
+	c.Change = float64(order.PayActualPrice) * float64(0.3) / 100
+
+	err := mysql.InsertCommission(c)
+	if err != nil {
+		util.Log().Error("insert commission err: %+v", err)
+		return
+	}
 
 }
 
