@@ -7,7 +7,7 @@ import (
 	"github.com/chanyipiaomiao/hltool"
 )
 
-const key = "Zl0/R0cj4B3sWvRCQvP2Y01i1P2w0ziaeC3npkqWfVqOKZYHCnXgJ3yAYjV8ndHo"
+const key = "Zl0/R0cj4B3sWvRCQvP2Y01i1P2w0zi2"
 
 var GoAes = hltool.NewGoAES([]byte(key))
 
