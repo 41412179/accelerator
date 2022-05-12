@@ -58,17 +58,17 @@ func Text(code int) string {
 // }
 
 // Err 通用错误处理
-// func Err(errCode int, msg string, err error) response.Response {
-// 	res := response.Response{
-// 		Code: errCode,
-// 		Msg:  msg,
-// 	}
-// 	// 生产环境隐藏底层报错
-// 	if err != nil && gin.Mode() != gin.ReleaseMode {
-// 		res.Error = err.Error()
-// 	}
-// 	return res
-// }
+func Err(errCode int, msg string, err error) response.Response {
+	res := response.Response{
+		Code: errCode,
+		Msg:  msg,
+	}
+	// 生产环境隐藏底层报错
+	if err != nil && gin.Mode() != gin.ReleaseMode {
+		res.Error = err.Error()
+	}
+	return res
+}
 
 // NewErr 通用错误处理
 func NewErr(errCode int, err error) response.Response {
@@ -92,9 +92,9 @@ func NewErr(errCode int, err error) response.Response {
 // }
 
 // ParamErr 各种参数错误
-// func ParamErr(msg string, err error) response.Response {
-// 	if msg == "" {
-// 		msg = "参数错误"
-// 	}
-// 	return Err(CodeParamErr, msg, err)
-// }
+func ParamErr(msg string, err error) response.Response {
+	if msg == "" {
+		msg = "参数错误"
+	}
+	return Err(CodeParamErr, msg, err)
+}
