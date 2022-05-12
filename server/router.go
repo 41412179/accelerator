@@ -36,10 +36,13 @@ func NewRouter() *gin.Engine {
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
 		{
-			// User Routing
+			// User Routing 获取节点信息
 			auth.GET("nodes", api.GetNodes)
-			// create order
+			// create order 下单接口
 			auth.POST("order", api.CreateOrder)
+			// 查询我的佣金统计
+			auth.GET("self/commission", api.GetCommissionByUser)
+
 		}
 	}
 	return r
