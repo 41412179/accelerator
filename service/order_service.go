@@ -70,6 +70,11 @@ func (o *OrderService) CreateOrder(c *gin.Context) response.Response {
 
 // computerCommission 计算佣金
 func (o *OrderService) computerCommission(orderId int64, order *table.Order) {
+	// 如果没有被邀请人，则不计算佣金
+	if o.user.InviterId == 0 {
+		return
+	}
+
 	// 计算佣金
 	c := new(table.Commission)
 	c.UserId = o.user.InviterId
