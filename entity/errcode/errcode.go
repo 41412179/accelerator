@@ -29,18 +29,21 @@ const (
 
 	// CodeGoodNotExist 商品不存在
 	CodeGoodNotExist = 20002
+
+	CodeCommissionNotEnough = 20003
 )
 
 // errMap 错误码文案映射
 var errMap = map[int]string{
-	CodeDBError:      "数据库操作失败",
-	CodeEncryptError: "加密失败",
-	CodeParamErr:     "参数错误",
-	CodeSuccess:      "成功",
-	CodeCheckLogin:   "未登录",
-	CodeNoRightErr:   "未授权访问",
-	CodeNodeNotExist: "节点不存在",
-	CodeGoodNotExist: "商品不存在",
+	CodeDBError:             "数据库操作失败",
+	CodeEncryptError:        "加密失败",
+	CodeParamErr:            "参数错误",
+	CodeSuccess:             "成功",
+	CodeCheckLogin:          "未登录",
+	CodeNoRightErr:          "未授权访问",
+	CodeNodeNotExist:        "节点不存在",
+	CodeGoodNotExist:        "商品不存在",
+	CodeCommissionNotEnough: "佣金不足",
 }
 
 //Text 错误码转换文案

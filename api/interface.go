@@ -79,3 +79,14 @@ func GetCommissionByUser(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+func WithdrawByUser(c *gin.Context) {
+	var service service.WithdrawService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.WithdrawByUser(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
