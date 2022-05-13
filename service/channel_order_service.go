@@ -11,9 +11,9 @@ import (
 )
 
 type ChannelOrderService struct {
-	ChannelId int64     `json:"channel_id" binding:"required"`
-	StartTime time.Time `json:"start_time" binding:"required" time_format:"2006-01-02 15:04:05"`
-	EndTime   time.Time `json:"end_time" binding:"required" time_format:"2019-01-02 15:04:05"`
+	ChannelId int64     `json:"channel_id" form:"channel_id" binding:"required"`
+	StartTime time.Time `json:"start_time" form:"start_time" binding:"required" time_format:"2006-01-02 15:04:05"`
+	EndTime   time.Time `json:"end_time" form:"end_time" binding:"required" time_format:"2006-01-02 15:04:05"`
 }
 
 type ChannelOrderServiceResponse struct {
