@@ -14,6 +14,7 @@ type Order struct {
 	PaymentId      int64     `gorm:"column:payment_id;type:bigint(20);NOT NULL" json:"payment_id"`
 	PayType        string    `gorm:"column:pay_type;type:varchar(20);NOT NULL" json:"pay_type"`            // 支付方式
 	PayActualPrice float64   `gorm:"column:pay_actual_price;type:double;NOT NULL" json:"pay_actual_price"` // 实际支付金额
+	ChannelId      int64     `gorm:"column:channel_id;type:bigint(20);NOT NULL" json:"channel_id"`         // 渠道id
 }
 
 func (m *Order) TableName() string {

@@ -2,7 +2,10 @@ package mysql
 
 import (
 	"accelerator/entity/db"
+	// "accelerator/entity/mysql"
 	"accelerator/entity/table"
+	"time"
+	// "gorm.io/driver/mysql"
 )
 
 const (
@@ -14,6 +17,16 @@ const (
 func GetOrdersByUserID(userID int64) ([]table.Order, error) {
 	var orders []table.Order
 	if err := db.DB.Where("user_id = ?", userID).Find(&orders).Error; err != nil {
+		return nil, err
+	}
+	return orders, nil
+}
+
+// GetOrdersByChannelID get orders by channel id
+func GetOrdersByChannelID(channelID int64, startTime, endTime time.Time) ([]table.Order, error) {
+	var orders []table.Order
+
+	if err := db.DB.Where("channel_id = ? AND created_at >= ? AND created_at <= ? AND status = ?", channelID, startTime, endTime, OrderStatusPaid).Find(&orders).Error; err != nil {
 		return nil, err
 	}
 	return orders, nil

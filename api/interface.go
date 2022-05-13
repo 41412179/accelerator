@@ -90,3 +90,15 @@ func WithdrawByUser(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// GetOrdersByChannelID 获取渠道订单
+func GetOrdersByChannelID(c *gin.Context) {
+	var service service.ChannelOrderService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetOrdersByChannelID(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

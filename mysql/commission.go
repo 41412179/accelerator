@@ -11,6 +11,12 @@ func GetCommissionsByUser(userID int64) ([]*table.Commission, error) {
 	return commissions, err
 }
 
+func GetCommissionsByChannelId(channelID int64) ([]*table.Commission, error) {
+	var commissions []*table.Commission
+	err := db.DB.Where("channel_id = ?", channelID).Find(&commissions).Error
+	return commissions, err
+}
+
 // InsertCommission 插入佣金
 func InsertCommission(commission *table.Commission) error {
 	return db.DB.Create(commission).Error
