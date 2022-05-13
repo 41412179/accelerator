@@ -32,12 +32,15 @@ func NewRouter() *gin.Engine {
 		// 套餐列表
 		v1.POST("good/list", api.GoodList)
 
+		// 节点列表
+		v1.GET("nodes", api.GetNodes)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
 		{
 			// User Routing 获取节点信息
-			auth.GET("nodes", api.GetNodes)
+			// auth.GET("nodes", api.GetNodes)
 			// create order 下单接口
 			auth.POST("order", api.CreateOrder)
 			// 查询我的佣金统计

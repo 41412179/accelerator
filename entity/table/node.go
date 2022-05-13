@@ -11,6 +11,7 @@ type Node struct {
 	Link      string    `gorm:"column:link;type:varchar(512);NOT NULL" json:"link"` // 节点链接
 	CreatedAt time.Time `gorm:"column:created_at;type:datetime;default:CURRENT_TIMESTAMP;NOT NULL" json:"created_at"`
 	UpdatedAt time.Time `gorm:"column:updated_at;type:datetime;default:CURRENT_TIMESTAMP;NOT NULL" json:"updated_at"`
+	Tag       int64     `gorm:"column:tag;type:bigint(20);NOT NULL" json:"tag"` // 标记：是不是推荐
 }
 
 // TableName 会将 Node 的表名重写为 `node`
