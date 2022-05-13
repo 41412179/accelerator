@@ -111,6 +111,7 @@ func (o *OrderService) generateOrder() *table.Order {
 	order.StartTime = time.Now()
 	order.EndTime = time.Now().Add(time.Hour * time.Duration(24))
 	order.Status = mysql.OrderStatusPaid
+	order.ChannelId = o.ChannelID
 	order.PayActualPrice = float64(good.Price) / 100
 	return order
 }
