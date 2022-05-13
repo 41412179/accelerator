@@ -20,6 +20,7 @@ func (w *WithdrawService) WithdrawByUser(c *gin.Context) response.Response {
 		util.Log().Error("user is nil")
 		return response.NewResponse(errcode.CodeCheckLogin, nil, errcode.Text(errcode.CodeCheckLogin))
 	}
+	w.user = user
 
 	// check
 	// o := NewOrderService()
@@ -32,6 +33,7 @@ func (w *WithdrawService) WithdrawByUser(c *gin.Context) response.Response {
 	commission := new(table.Commission)
 	commission.UserId = user.ID
 	commission.Change = -change
+	commission.Type = table.SubCommissionType
 	err := mysql.InsertCommission(commission)
 	if err != nil {
 		util.Log().Error("insert commission failed, err: %v", err)
