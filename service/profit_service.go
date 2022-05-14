@@ -25,6 +25,7 @@ type ProfitServiceResponse struct {
 	ProfitAmount  float64 `json:"profit_amount"`
 }
 
+// CalcProfit 计算利润
 func (p *ProfitService) CalcProfit(c *gin.Context) response.Response {
 	// 获取订单金额
 	orders, err := mysql.GetPaidOrdersByTime(p.StartTime, p.EndTime)
