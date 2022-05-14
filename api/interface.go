@@ -102,3 +102,15 @@ func GetOrdersByChannelID(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// CalcProfit 计算收益
+func CalcProfit(c *gin.Context) {
+	var service service.ProfitService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.CalcProfit(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

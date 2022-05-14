@@ -32,6 +32,16 @@ func GetOrdersByChannelID(channelID int64, startTime, endTime time.Time) ([]tabl
 	return orders, nil
 }
 
+// GetPaidOrdersByTime get paid orders by time
+func GetPaidOrdersByTime(startTime, endTime time.Time) ([]table.Order, error) {
+	var orders []table.Order
+
+	if err := db.DB.Where("created_at >= ? AND created_at <= ? AND status = ?", startTime, endTime, OrderStatusPaid).Find(&orders).Error; err != nil {
+		return nil, err
+	}
+	return orders, nil
+}
+
 func InsertOrder(order *table.Order) (int64, error) {
 	if err := db.DB.Create(order).Error; err != nil {
 		return 0, err

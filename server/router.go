@@ -38,6 +38,9 @@ func NewRouter() *gin.Engine {
 		// 查询某个渠道的order
 		v1.GET("channel/orders", api.GetOrdersByChannelID)
 
+		// 计算利润
+		v1.POST("profit", api.CalcProfit)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
