@@ -55,5 +55,5 @@ func (p *ProfitService) CalcProfit(c *gin.Context) response.Response {
 	}
 
 	r.ProfitAmount = r.TotalOrders - (r.ChannelAmount + r.InviterAmount)
-	return response.NewResponse(errcode.CodeSuccess, nil, errcode.Text(errcode.CodeSuccess))
+	return response.NewResponse(errcode.CodeSuccess, r, errcode.Text(errcode.CodeSuccess))
 }
