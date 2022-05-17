@@ -34,7 +34,7 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 	// 设置session
 	// service.setSession(c, user)
 
-	user, err := mysql.GetUserByEmail(u.Email)
+	localUser, err := mysql.GetUserByEmail(u.Email)
 
 	// 判断用户是否存在
 	if err == gorm.ErrRecordNotFound {
@@ -42,30 +42,28 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 		id, err := mysql.InsertUser(user)
 		if err != nil {
 			util.Log().Error("insert user err: %v", err)
-			return errcode.NewErr(errcode.CodeDBError, err)
+			// return errcode.NewErr(errcode.CodeDBError, err)
 		}
 		if err := u.createToken(id); err != nil {
 			util.Log().Error("create token err: %v", err)
-			return errcode.NewErr(errcode.CodeDBError, err)
+			// return errcode.NewErr(errcode.CodeDBError, err)
 		}
-	}
-
-	// 如果异常
-	if err != nil {
+		localUser = user
+	} else if err != nil {
 		util.Log().Error("get user by email err: %v", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
 
 	// 如果存在，则查询剩余时间
-	remainingTime, err := u.orderService.GetRemainingTimeByUserId(user.ID)
+	remainingTime, err := u.orderService.GetRemainingTimeByUserId(localUser.ID)
 	if err != nil {
 		util.Log().Error("get remaining time by user id err: %v", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
 
 	// 查询token
-	u.getTokenByUserID(user.ID)
-	return u.setRsponse(user, remainingTime)
+	u.getTokenByUserID(localUser.ID)
+	return u.setRsponse(localUser, remainingTime)
 }
 
 // getTokenByUserID 根据用户id获取token
