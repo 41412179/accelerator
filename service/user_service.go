@@ -39,14 +39,16 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 	// 判断用户是否存在
 	if err == gorm.ErrRecordNotFound {
 		user := u.createNewUser()
-		id, err := mysql.InsertUser(user)
+		_, err := mysql.InsertUser(user)
 		if err != nil {
 			util.Log().Error("insert user err: %v", err)
-			// return errcode.NewErr(errcode.CodeDBError, err)
 		}
-		if err := u.createToken(id); err != nil {
+		user, err = mysql.GetUserByEmail(u.Email)
+		if err != nil {
+			util.Log().Error("get user err: %v", err)
+		}
+		if err := u.createToken(user.ID); err != nil {
 			util.Log().Error("create token err: %v", err)
-			// return errcode.NewErr(errcode.CodeDBError, err)
 		}
 		localUser = user
 	} else if err != nil {
