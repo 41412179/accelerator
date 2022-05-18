@@ -23,6 +23,11 @@ func NewOrderService() *OrderService {
 	return &OrderService{}
 }
 
+// GetExpireTimeByUserId 获取过期时间
+func (o *OrderService) GetExpireTimeByUserId(userID int64, remainingTime int64) int64 {
+	return time.Now().Unix() + remainingTime
+}
+
 // GetRemainingTime 获取剩余时间
 func (o *OrderService) GetRemainingTimeByUserId(userId int64) (int64, error) {
 	orders, err := mysql.GetOrdersByUserID(userId)
@@ -109,7 +114,7 @@ func (o *OrderService) generateOrder() *table.Order {
 	order.PayType = o.PayType
 	order.UserId = o.user.ID
 	order.StartTime = time.Now()
-	order.EndTime = time.Now().Add(time.Hour * time.Duration(24))
+	order.EndTime = time.Now().Add(time.Minute * time.Duration(good.Duration))
 	order.Status = mysql.OrderStatusPaid
 	order.ChannelId = o.ChannelID
 	order.PayActualPrice = float64(good.Price) / 100

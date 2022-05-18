@@ -6,4 +6,5 @@ type UserServiceRsp struct {
 	Email         string `json:"email"`
 	Token         string `json:"token"`
 	RemainingTime int64  `json:"remaining_time"`
+	ExpireDate    int64  `json:"expire_date"`
 }

@@ -105,6 +105,7 @@ func (u *UserService) setRsponse(user *table.User, remainingTime int64) response
 			Email:         user.Email,
 			Token:         u.token,
 			RemainingTime: remainingTime,
+			ExpireDate:    time.Now().Unix() + remainingTime,
 		},
 	}
 }
