@@ -46,7 +46,7 @@ func NewRouter() *gin.Engine {
 		auth.Use(middleware.AuthRequired())
 		{
 			// create order 下单接口
-			auth.POST("order", api.CreateOrder)
+			auth.GET("order", api.CreateOrder)
 			// 查询我的佣金统计
 			auth.GET("self/commission", api.GetCommissionByUser)
 			// 查询佣金明细
