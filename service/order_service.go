@@ -38,7 +38,9 @@ func (o *OrderService) GetRemainingTimeByUserId(userId int64) (int64, error) {
 	var remainingTime int64
 	for _, order := range orders {
 		if order.Status == mysql.OrderStatusPaid {
-			remainingTime += order.EndTime.Unix() - int64(time.Now().Unix())
+			if order.EndTime.Unix() > time.Now().Unix() {
+				remainingTime += order.EndTime.Unix() - int64(time.Now().Unix())
+			}
 		}
 	}
 
