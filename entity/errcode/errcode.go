@@ -31,6 +31,12 @@ const (
 	CodeGoodNotExist = 20002
 
 	CodeCommissionNotEnough = 20003
+
+	CodeAdminLoginFailed = 20004
+
+	CodeTokenError = 20005
+
+	CodePermissionDenied = 20006
 )
 
 // errMap 错误码文案映射
@@ -44,6 +50,9 @@ var errMap = map[int]string{
 	CodeNodeNotExist:        "节点不存在",
 	CodeGoodNotExist:        "商品不存在",
 	CodeCommissionNotEnough: "佣金不足",
+	CodeAdminLoginFailed:    "管理员登录失败",
+	CodeTokenError:          "token无法读取",
+	CodePermissionDenied:    "token错误",
 }
 
 //Text 错误码转换文案

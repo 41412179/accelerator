@@ -35,6 +35,31 @@ func CurrentUser() gin.HandlerFunc {
 	}
 }
 
+// AdminRequired 检查是否是管理员
+func AdminRequired() gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		token, ok := c.GetQuery("token")
+		if !ok {
+			c.JSON(200, response.NewResponse(errcode.CodeTokenError, nil, errcode.Text(errcode.CodeTokenError)))
+			c.Abort()
+			return
+		}
+		diff, err := util.AesDecrypt("admin" + ":" + "accelerator")
+		if err != nil {
+			c.JSON(200, response.NewResponse(errcode.CodeTokenError, nil, errcode.Text(errcode.CodeTokenError)))
+			c.Abort()
+			return
+		}
+		if token != diff {
+			c.JSON(200, response.NewResponse(errcode.CodePermissionDenied, nil, errcode.Text(errcode.CodePermissionDenied)))
+			c.Abort()
+			return
+		}
+		c.Next()
+	}
+}
+
 // AuthRequired 需要登录
 func AuthRequired() gin.HandlerFunc {
 	return func(c *gin.Context) {

@@ -43,6 +43,42 @@ func GetNodes(c *gin.Context) {
 	}
 }
 
+// GetAdminNodes admin获取节点列表
+func GetAdminNodes(c *gin.Context) {
+	var service service.AdminNodeService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetNodes(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// DeleteNode 删除节点
+func DeleteNode(c *gin.Context) {
+	var service service.AdminDeleteNodeService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.DeleteNode(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+// AddNode 添加节点
+func AddNode(c *gin.Context) {
+	var service service.AdminAddNodeService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AddNode(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
 // GoodList 获取套餐列表
 func GoodList(c *gin.Context) {
 	var service service.GoodService
@@ -131,6 +167,17 @@ func GetVersion(c *gin.Context) {
 
 	if err := c.ShouldBind(&service); err == nil {
 		res := service.GetVersion(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
+func AdminLogin(c *gin.Context) {
+	var service service.AdminService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AdminLogin(c)
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))

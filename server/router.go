@@ -58,6 +58,23 @@ func NewRouter() *gin.Engine {
 			auth.GET("expire/time", api.GetExpireTime)
 
 		}
+
+		// 管理员接口
+		admin := v1.Group("admin")
+		// 管理员需要token才能访问的接口
+		admin.GET("/login", api.AdminLogin)
+		admin.Use(middleware.AdminRequired())
+		{
+			// 查询所有节点
+			admin.GET("nodes", api.GetAdminNodes)
+
+			// 管理员删除节点
+			admin.POST("nodes/delete", api.DeleteNode)
+
+			// 管理员新增节点
+			admin.POST("nodes/add", api.AddNode)
+
+		}
 	}
 	return r
 }

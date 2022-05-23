@@ -22,6 +22,22 @@ func AesEncrypt(origData string) (string, error) {
 	return base64.StdEncoding.EncodeToString(encrypt), err
 }
 
+// AesDecrypt 解密
+func AesDecrypt(ciphertext string) (string, error) {
+	// 解密数据
+	decrypt, err := base64.StdEncoding.DecodeString(ciphertext)
+	if err != nil {
+		Log().Error("decrypt err: %v", err)
+		return "", err
+	}
+	origData, err := GoAes.Decrypt(decrypt)
+	if err != nil {
+		Log().Error("decrypt err: %v", err)
+		return "", err
+	}
+	return string(origData), err
+}
+
 // GenerateAesKey 生成AES密钥
 func GenerateAesKey() []byte {
 	key := make([]byte, 32)
