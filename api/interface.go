@@ -79,6 +79,18 @@ func AddNode(c *gin.Context) {
 	}
 }
 
+// EditNode 编辑节点
+func EditNode(c *gin.Context) {
+	var service service.AdminEditNodeService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.EditNode(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
 // GoodList 获取套餐列表
 func GoodList(c *gin.Context) {
 	var service service.GoodService

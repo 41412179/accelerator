@@ -74,6 +74,8 @@ func NewRouter() *gin.Engine {
 			// 管理员新增节点
 			admin.POST("nodes/add", api.AddNode)
 
+			// 管理员编辑节点
+			admin.POST("nodes/edit", api.EditNode)
 		}
 	}
 	return r

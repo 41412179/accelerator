@@ -21,3 +21,8 @@ func DeleteNode(id int64) error {
 func AddNode(node *table.Node) error {
 	return db.DB.Create(node).Error
 }
+
+// UpdateNode 更新节点
+func EditNode(node *table.Node) error {
+	return db.DB.Model(&table.Node{}).Where("id = ?", node.Id).Updates(node).Error
+}
