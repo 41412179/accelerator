@@ -6,9 +6,9 @@ import (
 )
 
 func GetVersion() (*table.Version, error) {
-	var version *table.Version
-	if err := db.DB.First(version).Error; err != nil {
+	var version table.Version
+	if err := db.DB.First(&version).Error; err != nil {
 		return nil, err
 	}
-	return version, nil
+	return &version, nil
 }
