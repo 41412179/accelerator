@@ -125,3 +125,14 @@ func GetExpireTime(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+func GetVersion(c *gin.Context) {
+	var service service.VersionService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetVersion(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

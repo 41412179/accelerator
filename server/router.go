@@ -41,6 +41,9 @@ func NewRouter() *gin.Engine {
 		// 计算利润
 		v1.POST("profit", api.CalcProfit)
 
+		// 查询版本号
+		v1.GET("version", api.GetVersion)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
