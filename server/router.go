@@ -69,13 +69,13 @@ func NewRouter() *gin.Engine {
 			admin.GET("nodes", api.GetAdminNodes)
 
 			// 管理员删除节点
-			admin.POST("nodes/delete", api.DeleteNode)
+			admin.GET("nodes/delete", api.DeleteNode)
 
 			// 管理员新增节点
-			admin.POST("nodes/add", api.AddNode)
+			admin.GET("nodes/add", api.AddNode)
 
 			// 管理员编辑节点
-			admin.POST("nodes/edit", api.EditNode)
+			admin.GET("nodes/edit", api.EditNode)
 		}
 	}
 	return r

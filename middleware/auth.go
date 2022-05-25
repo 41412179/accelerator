@@ -5,6 +5,8 @@ import (
 	"accelerator/entity/table"
 	"accelerator/mysql"
 	"accelerator/util"
+	"fmt"
+	"strings"
 
 	"accelerator/entity/errcode"
 
@@ -14,6 +16,12 @@ import (
 // CurrentUser 获取登录用户
 func CurrentUser() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		// 如果是管理员,直接跳过
+		fmt.Println(c.FullPath())
+		if strings.Contains(c.FullPath(), ("admin")) {
+			// c.Next()
+			return
+		}
 		token, ok := c.GetQuery("token")
 		var uid int64
 		if ok {
@@ -45,13 +53,16 @@ func AdminRequired() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		diff, err := util.AesDecrypt("admin" + ":" + "accelerator")
+		diff, err := util.AesEncrypt("admin" + ":" + "accelerator")
 		if err != nil {
+			util.Log().Error("aes encrypt err: %v", err)
 			c.JSON(200, response.NewResponse(errcode.CodeTokenError, nil, errcode.Text(errcode.CodeTokenError)))
 			c.Abort()
 			return
 		}
-		if token != diff {
+
+		if !strings.Contains(diff, strings.Trim(token, " ")) {
+			util.Log().Error("token error, token: %v, diff: %v", token, diff)
 			c.JSON(200, response.NewResponse(errcode.CodePermissionDenied, nil, errcode.Text(errcode.CodePermissionDenied)))
 			c.Abort()
 			return

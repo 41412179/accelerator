@@ -10,11 +10,11 @@ import (
 )
 
 type AdminDeleteNodeService struct {
-	NodeID int64 `json:"node_id" form:"node_id" binding:"required"`
+	ID int64 `json:"id" form:"id" binding:"required"`
 }
 
 func (a *AdminDeleteNodeService) DeleteNode(ctx *gin.Context) response.Response {
-	if err := mysql.DeleteNode(a.NodeID); err != nil {
+	if err := mysql.DeleteNode(a.ID); err != nil {
 		util.Log().Error("delete node err: %v", err)
 		return response.NewResponse(errcode.CodeDBError, nil, errcode.Text(errcode.CodeDBError))
 	}
