@@ -44,6 +44,9 @@ func NewRouter() *gin.Engine {
 		// 查询版本号
 		v1.GET("version", api.GetVersion)
 
+		// 查询分享链接
+		v1.GET("share", api.GetShare)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())

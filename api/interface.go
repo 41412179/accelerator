@@ -195,3 +195,14 @@ func AdminLogin(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+func GetShare(c *gin.Context) {
+	var service service.ShareService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.GetShare(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
