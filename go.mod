@@ -9,7 +9,8 @@ require (
 	github.com/fastly/go-utils v0.0.0-20180712184237-d95a45783239 // indirect
 	github.com/gin-contrib/cors v1.3.1
 	github.com/gin-contrib/sessions v0.0.3
-	github.com/gin-gonic/gin v1.7.1
+	github.com/gin-gonic/gin v1.8.0
+	github.com/go-pay/gopay v1.5.79
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/jehiah/go-strftime v0.0.0-20171201141054-1d33003b3869 // indirect
 	github.com/joho/godotenv v1.3.0
@@ -23,7 +24,6 @@ require (
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/tuotoo/qrcode v0.0.0-20220425170535-52ccc2bebf5d // indirect
-	golang.org/x/crypto v0.0.0-20220331220935-ae2d96664a29 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/go-playground/validator.v8 v8.18.2
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
