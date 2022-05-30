@@ -13,7 +13,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-pay/gopay"
 	"github.com/go-pay/gopay/alipay"
-	"github.com/go-pay/gopay/pkg/xlog"
 
 	// "github.com/go-pay/pkg/util"
 	payutil "github.com/go-pay/gopay/pkg/util"
@@ -148,7 +147,7 @@ func (o *OrderService) createOrderStr() (string, error) {
 	//    isProd：是否是正式环境
 	client, err := alipay.NewClient(conf.PayConf.AppID, conf.PayConf.AppPrivateKey, conf.PayConf.Pro)
 	if err != nil {
-		xlog.Error(err)
+		util.Log().Error("初始化支付宝客户端失败", err)
 		return "", err
 	}
 	//配置公共参数
@@ -164,9 +163,8 @@ func (o *OrderService) createOrderStr() (string, error) {
 	//手机APP支付参数请求
 	payParam, err := client.TradeAppPay(context.Background(), bm)
 	if err != nil {
-		xlog.Error("err:", err)
+		util.Log().Error("err:", err)
 		return "", err
 	}
-	xlog.Debug("payParam:", payParam)
 	return payParam, nil
 }
