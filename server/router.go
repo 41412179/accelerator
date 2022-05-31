@@ -50,6 +50,8 @@ func NewRouter() *gin.Engine {
 		// 支付宝回调通知
 		v1.POST("alipay/notify", api.AlipayNotify)
 
+		v1.GET("geos", api.GetGeos)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())
