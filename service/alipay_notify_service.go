@@ -5,7 +5,6 @@ import (
 	"accelerator/entity/response"
 	"accelerator/mysql"
 	"accelerator/util"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-pay/gopay"
@@ -48,15 +47,15 @@ func (a *AlipayNotifyService) UpdateOrderStatus(bm gopay.BodyMap) {
 	}
 	if bm["trade_status"].(string) == "TRADE_SUCCESS" {
 		order.Status = mysql.OrderStatusPaid
-		order.EndTime = time.Now()
+		// order.EndTime = time.Now()
 	}
 	if bm["trade_status"].(string) == "TRADE_CLOSED" {
 		order.Status = mysql.OrderStatusCanceled
-		order.EndTime = time.Now()
+		// order.EndTime = time.Now()
 	}
 	if bm["trade_status"].(string) == "TRADE_FINISHED" {
 		order.Status = mysql.OrderStatusFinished
-		order.EndTime = time.Now()
+		// order.EndTime = time.Now()
 	}
 
 	order.Status = mysql.OrderStatusPaid
