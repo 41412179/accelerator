@@ -1,6 +1,8 @@
 package table
 
-import "time"
+import (
+	"time"
+)
 
 type Order struct {
 	Id             int64     `gorm:"column:id;type:bigint(20);primary_key;AUTO_INCREMENT" json:"id"`
@@ -15,6 +17,7 @@ type Order struct {
 	PayType        string    `gorm:"column:pay_type;type:varchar(20);NOT NULL" json:"pay_type"`            // 支付方式
 	PayActualPrice float64   `gorm:"column:pay_actual_price;type:double;NOT NULL" json:"pay_actual_price"` // 实际支付金额
 	ChannelId      int64     `gorm:"column:channel_id;type:bigint(20);NOT NULL" json:"channel_id"`         // 渠道id
+	TradeNo        string    `gorm:"column:trade_no;type:varchar(512);NOT NULL" json:"trade_no"`           // 支付宝的out_trade_no
 }
 
 func (m *Order) TableName() string {

@@ -39,6 +39,8 @@ const (
 	CodePermissionDenied = 20006
 
 	CodeCreateOrderFailed = 20007
+
+	CodeErrCreateOrder = 20008
 )
 
 // errMap 错误码文案映射
@@ -56,6 +58,7 @@ var errMap = map[int]string{
 	CodeTokenError:          "token无法读取",
 	CodePermissionDenied:    "token错误",
 	CodeCreateOrderFailed:   "创建订单失败",
+	// CodeErrCreateOrder:      "创建订单失败",
 }
 
 //Text 错误码转换文案
