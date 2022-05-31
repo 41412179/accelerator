@@ -8,6 +8,8 @@ import (
 	"accelerator/mysql"
 	"accelerator/util"
 	"context"
+	"log"
+	"net/http"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -173,4 +175,24 @@ func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
 		return "", err
 	}
 	return payParam, nil
+}
+
+// yAndVerifySign 支付宝异步通知及验签
+func (o *OrderService) ParseNotifyAndVerifySign(req *http.Request) {
+
+	// 解析请求参数
+	bm, err := alipay.ParseNotifyToBodyMap(req)
+	if err != nil {
+		util.Log().Error("err:", err)
+		return
+	}
+	util.Log().Info("notifyReq:", bm)
+
+	// 验签
+	ok, err := alipay.VerifySign(conf.PayConf.AliPublicKey, bm)
+	if err != nil {
+		util.Log().Error("vertify sign err:", err)
+		return
+	}
+	log.Println("支付宝验签是否通过:", ok)
 }

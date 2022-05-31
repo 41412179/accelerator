@@ -17,12 +17,13 @@ type Conf struct {
 	AliPublicKey  string
 	Pro           bool
 	NotifyUrl     string
+	DSN           string
 }
 
 var PayConf *Conf
 
 // Init 初始化配置项
-func Init() {
+func (c *Conf) Init() {
 	// 从本地读取环境变量
 	godotenv.Load(".env.example")
 
@@ -40,7 +41,6 @@ func Init() {
 	db.Database(os.Getenv("MYSQL_DSN"))
 
 	// 支付相关的配置
-	// AppID =
 	PayConf = &Conf{
 		AppID:         os.Getenv("APP_ID"),
 		AppName:       os.Getenv("APP_NAME"),
@@ -50,6 +50,7 @@ func Init() {
 		PID:           os.Getenv("PID"),
 		Pro:           os.Getenv("PRO") == "true",
 		NotifyUrl:     os.Getenv("Notify_url"),
+		DSN:           os.Getenv("MYSQL_DSN"),
 	}
 
 	// 预留redis，如果需要使用缓存，打开这行注释
