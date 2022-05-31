@@ -8,7 +8,6 @@ import (
 	"accelerator/mysql"
 	"accelerator/util"
 	"context"
-	"log"
 	"net/http"
 	"time"
 
@@ -164,9 +163,9 @@ func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
 	//请求参数
 	bm := make(gopay.BodyMap)
 	bm.Set("subject", "加速器支付")
-	tradeNo := payutil.RandomString(32)
-	order.TradeNo = tradeNo
-	bm.Set("out_trade_no", tradeNo)
+	outTradeNo := payutil.RandomString(32)
+	order.OutTradeNo = outTradeNo
+	bm.Set("out_trade_no", outTradeNo)
 	bm.Set("total_amount", order.PayActualPrice)
 	//手机APP支付参数请求
 	payParam, err := client.TradeAppPay(context.Background(), bm)
@@ -178,13 +177,13 @@ func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
 }
 
 // yAndVerifySign 支付宝异步通知及验签
-func (o *OrderService) ParseNotifyAndVerifySign(req *http.Request) {
+func (o *OrderService) ParseNotifyAndVerifySign(req *http.Request) (gopay.BodyMap, error) {
 
 	// 解析请求参数
 	bm, err := alipay.ParseNotifyToBodyMap(req)
 	if err != nil {
-		util.Log().Error("err:", err)
-		return
+		util.Log().Error("parse notify to body map err:", err)
+		return bm, err
 	}
 	util.Log().Info("notifyReq:", bm)
 
@@ -192,7 +191,8 @@ func (o *OrderService) ParseNotifyAndVerifySign(req *http.Request) {
 	ok, err := alipay.VerifySign(conf.PayConf.AliPublicKey, bm)
 	if err != nil {
 		util.Log().Error("vertify sign err:", err)
-		return
+		return bm, err
 	}
-	log.Println("支付宝验签是否通过:", ok)
+	util.Log().Info("支付宝验签是否通过:", ok)
+	return bm, nil
 }

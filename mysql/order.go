@@ -9,10 +9,13 @@ import (
 )
 
 const (
-	OrderStatusUnpaid   = 0
-	OrderStatusPaying   = 2
-	OrderStatusPaid     = 4
-	OrderStatusCanceled = 6
+	OrderStatusUnpaid   = 0  // 未支付
+	OrderStatusPaying   = 2  // 支付中
+	OrderStatusPaid     = 4  // 已支付
+	OrderStatusRefund   = 6  // 已退款,未使用这个状态目前
+	OrderStatusCanceled = 8  // 已取消,未付款
+	OrderStatusFinished = 10 // 已完成
+
 )
 
 // GetOrderByID get order by id
@@ -49,4 +52,20 @@ func InsertOrder(order *table.Order) (int64, error) {
 		return 0, err
 	}
 	return order.Id, nil
+}
+
+// GetOrderByOutTradeNo get order by out trade no
+func GetOrderByOutTradeNo(outTradeNo string) (*table.Order, error) {
+	var order table.Order
+	if err := db.DB.Where("out_trade_no = ?", outTradeNo).First(&order).Error; err != nil {
+		return nil, err
+	}
+	return &order, nil
+}
+
+func UpdateOrder(order *table.Order) error {
+	if err := db.DB.Save(order).Error; err != nil {
+		return err
+	}
+	return nil
 }

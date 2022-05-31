@@ -206,3 +206,15 @@ func GetShare(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+// AlipayNotify 支付宝通知
+func AlipayNotify(c *gin.Context) {
+	var service service.AlipayNotifyService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.AlipayNotify(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
