@@ -41,7 +41,6 @@ func (a *AlipayNotifyService) AlipayNotify(c *gin.Context) response.Response {
 
 // UpdateOrderStatus 更新订单状态
 func (a *AlipayNotifyService) UpdateOrderStatus(bm gopay.BodyMap) {
-	// o := new(OrderService)
 	order, err := mysql.GetOrderByOutTradeNo(bm["out_trade_no"].(string))
 	if err != nil {
 		util.Log().Error("get order by out_trade_no failed, err: %v", err)
