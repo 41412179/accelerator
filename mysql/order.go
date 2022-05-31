@@ -9,8 +9,10 @@ import (
 )
 
 const (
-	OrderStatusUnpaid = 0
-	OrderStatusPaid   = 1
+	OrderStatusUnpaid   = 0
+	OrderStatusPaying   = 2
+	OrderStatusPaid     = 4
+	OrderStatusCanceled = 6
 )
 
 // GetOrderByID get order by id
