@@ -42,10 +42,10 @@ func (g *GoodService) GetGoods(c *gin.Context) response.Response {
 		goodInfo := &GoodInfo{
 			Id:          good.Id,
 			Duration:    good.Duration,
-			Price:       float32(good.Price) / 100.0 * 6.7,
+			Price:       float32(good.Price) / 100.0,
 			CreatedAt:   good.CreatedAt,
 			UpdatedAt:   good.UpdatedAt,
-			OriginPrice: float32(good.OriginPrice) / 100.0 * 6.7,
+			OriginPrice: float32(good.OriginPrice) / 100.0,
 			Radio:       good.Radio,
 			Title:       fmt.Sprintf("%d", good.Duration/24/60) + "天会员",
 		}
