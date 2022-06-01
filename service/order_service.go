@@ -8,6 +8,7 @@ import (
 	"accelerator/mysql"
 	"accelerator/util"
 	"context"
+	"fmt"
 	"net/http"
 	"time"
 
@@ -166,7 +167,7 @@ func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
 	outTradeNo := payutil.RandomString(32)
 	order.OutTradeNo = outTradeNo
 	bm.Set("out_trade_no", outTradeNo)
-	bm.Set("total_amount", order.PayActualPrice*6.7)
+	bm.Set("total_amount", fmt.Sprintf("%.2f", order.PayActualPrice*6.7))
 	//手机APP支付参数请求
 	payParam, err := client.TradeAppPay(context.Background(), bm)
 	if err != nil {
