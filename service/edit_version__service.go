@@ -8,9 +8,9 @@ import (
 )
 
 type EditVersionService struct {
-	Version string `json:"version"`
-	URL     string `json:"url"`
-	ID      int64  `json:"id"`
+	Version string `json:"version" form:"version" binding:"required"`
+	URL     string `json:"url" form:"url" binding:"required"`
+	ID      int64  `json:"id" form:"id" binding:"required"`
 }
 
 func (v *EditVersionService) EditVersion() response.Response {

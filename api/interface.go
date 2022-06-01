@@ -96,7 +96,7 @@ func EditVersion(c *gin.Context) {
 	var service service.EditVersionService
 
 	if err := c.ShouldBind(&service); err == nil {
-		res := service.EditVersion(c)
+		res := service.EditVersion()
 		c.JSON(200, res)
 	} else {
 		c.JSON(200, ErrorResponse(err))
