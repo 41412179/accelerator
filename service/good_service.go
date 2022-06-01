@@ -5,6 +5,7 @@ import (
 	"accelerator/entity/response"
 	"accelerator/mysql"
 	"accelerator/util"
+	"fmt"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +23,7 @@ type GoodInfo struct {
 	UpdatedAt   time.Time `gorm:"column:updated_at;type:datetime;default:CURRENT_TIMESTAMP;NOT NULL" json:"updated_at"`
 	OriginPrice float32   `gorm:"column:origin_price;type:bigint(20);NOT NULL" json:"origin_price"`
 	Radio       string    `gorm:"column:radio;type:varchar(45);NOT NULL" json:"radio"` // 折扣
-
+	Title       string    `gorm:"column:title;type:varchar(45);NOT NULL" json:"title"`
 }
 
 // GetGoods 获取商品列表
@@ -46,6 +47,7 @@ func (g *GoodService) GetGoods(c *gin.Context) response.Response {
 			UpdatedAt:   good.UpdatedAt,
 			OriginPrice: float32(good.OriginPrice) / 100.0,
 			Radio:       good.Radio,
+			Title:       fmt.Sprintf("%d", good.Duration/24/60) + "天会员",
 		}
 		goodInfos = append(goodInfos, goodInfo)
 	}
