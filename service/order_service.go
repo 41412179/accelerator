@@ -133,7 +133,7 @@ func (o *OrderService) generateOrder() (*table.Order, string, error) {
 	order.EndTime = time.Now().Add(time.Minute * time.Duration(good.Duration))
 	order.Status = mysql.OrderStatusPaying
 	order.ChannelId = o.ChannelID
-	order.PayActualPrice = float64(good.Price) / 100 * 6.7
+	order.PayActualPrice = float64(good.Price) / 100
 
 	// 支付宝支付信息
 	str, err := o.createOrderStr(order)
@@ -166,7 +166,7 @@ func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
 	outTradeNo := payutil.RandomString(32)
 	order.OutTradeNo = outTradeNo
 	bm.Set("out_trade_no", outTradeNo)
-	bm.Set("total_amount", order.PayActualPrice)
+	bm.Set("total_amount", order.PayActualPrice*6.7)
 	//手机APP支付参数请求
 	payParam, err := client.TradeAppPay(context.Background(), bm)
 	if err != nil {
