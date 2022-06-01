@@ -133,7 +133,7 @@ func (o *OrderService) generateOrder() (*table.Order, string, error) {
 	order.EndTime = time.Now().Add(time.Minute * time.Duration(good.Duration))
 	order.Status = mysql.OrderStatusPaying
 	order.ChannelId = o.ChannelID
-	order.PayActualPrice = float64(good.Price) / 100
+	order.PayActualPrice = float64(good.Price) / 100 * 6.7
 
 	// 支付宝支付信息
 	str, err := o.createOrderStr(order)
