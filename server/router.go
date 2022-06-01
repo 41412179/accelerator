@@ -84,6 +84,9 @@ func NewRouter() *gin.Engine {
 
 			// 管理员编辑节点
 			admin.GET("nodes/edit", api.EditNode)
+
+			// 管理员编辑版本号
+			admin.GET("version/edit", api.EditVersion)
 		}
 	}
 	return r

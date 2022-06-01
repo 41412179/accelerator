@@ -91,6 +91,18 @@ func EditNode(c *gin.Context) {
 	}
 }
 
+// EditVersion 编辑版本
+func EditVersion(c *gin.Context) {
+	var service service.EditVersionService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.EditVersion(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}
+
 // GoodList 获取套餐列表
 func GoodList(c *gin.Context) {
 	var service service.GoodService
