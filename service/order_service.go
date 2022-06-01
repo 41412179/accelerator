@@ -137,7 +137,7 @@ func (o *OrderService) generateOrder() (*table.Order, string, error) {
 	order.PayActualPrice = float64(good.Price) / 100
 
 	// 支付宝支付信息
-	str, err := o.createOrderStr(order)
+	str, err := o.createOrderStr(good, order)
 	if err != nil {
 		util.Log().Error("create order str err: %+v", err)
 		return order, "", err
@@ -146,7 +146,7 @@ func (o *OrderService) generateOrder() (*table.Order, string, error) {
 }
 
 // createOrderStr 生成订单字符串
-func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
+func (o *OrderService) createOrderStr(good *table.Good, order *table.Order) (string, error) {
 	//初始化支付宝客户端
 	//    appId：应用ID
 	//    privateKey：应用私钥，支持PKCS1和PKCS8
@@ -163,7 +163,7 @@ func (o *OrderService) createOrderStr(order *table.Order) (string, error) {
 
 	//请求参数
 	bm := make(gopay.BodyMap)
-	bm.Set("subject", "加速器支付")
+	bm.Set("subject", fmt.Sprintf("%d", good.Duration/24/60)+"天会员")
 	outTradeNo := payutil.RandomString(32)
 	order.OutTradeNo = outTradeNo
 	bm.Set("out_trade_no", outTradeNo)
