@@ -52,6 +52,8 @@ func NewRouter() *gin.Engine {
 
 		v1.GET("geos", api.GetGeos)
 
+		v1.GET("exist/user", api.ExistUser)
+
 		// 需要token才能访问的接口
 		auth := v1.Group("")
 		auth.Use(middleware.AuthRequired())

@@ -43,6 +43,8 @@ const (
 	CodeErrCreateOrder = 20008
 
 	ErrAlipayNotifySignVerifyFailed = 20009
+
+	CodeUserNotExist = 20010
 )
 
 // errMap 错误码文案映射
@@ -62,6 +64,7 @@ var errMap = map[int]string{
 	CodeCreateOrderFailed:   "创建订单失败",
 	// CodeErrCreateOrder:      "创建订单失败",
 	ErrAlipayNotifySignVerifyFailed: "支付宝回调签名验证失败",
+	CodeUserNotExist:                "qq用户不存在",
 }
 
 //Text 错误码转换文案
