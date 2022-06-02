@@ -37,7 +37,7 @@ func (p *ProfitService) CalcProfit(c *gin.Context) response.Response {
 	r.TotalOrders = 0
 	for _, order := range orders {
 		r.TotalOrders += order.PayActualPrice
-		if order.ChannelId != 0 {
+		if order.ChannelId != 1 {
 			r.ChannelAmount += order.PayActualPrice * 0.4
 		}
 	}
