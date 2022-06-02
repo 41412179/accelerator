@@ -12,7 +12,10 @@ func Cors() gin.HandlerFunc {
 	config.AllowHeaders = []string{"Origin", "Content-Length", "Content-Type", "Cookie"}
 	if gin.Mode() == gin.ReleaseMode {
 		// 生产环境需要配置跨域域名，否则403
-		config.AllowOrigins = []string{"https://api.ainet.vip", "https://ainet.site", "https://www.ainet.site", "https://qaqdog.com", "http://admin.ainet.vip"}
+		config.AllowOrigins = []string{"https://api.ainet.vip",
+			"https://ainet.site", "https://www.ainet.site",
+			"https://qaqdog.com", "http://admin.ainet.vip",
+			"https://gamebox.qaqdog.com", "http://lol3.qaqdog.com"}
 	} else {
 		config.AllowOrigins = []string{"http://apitest.ainet.site", "http://ainet.site", "http://www.ainet.site", "http://test.ainet.site:3000"}
 	}
