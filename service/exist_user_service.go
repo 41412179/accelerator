@@ -19,6 +19,9 @@ func (e *ExistUserService) ExistUser(g *gin.Context) response.Response {
 		util.Log().Error("exist user err: %v", err)
 		return response.NewResponse(errcode.CodeUserNotExist, nil, errcode.Text(errcode.CodeUserNotExist))
 	}
+	if len(user) == 0 {
+		return response.NewResponse(errcode.CodeUserNotExist, nil, errcode.Text(errcode.CodeUserNotExist))
+	}
 
 	return response.Response{
 		Code: errcode.CodeSuccess,
