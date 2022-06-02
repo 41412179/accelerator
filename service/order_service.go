@@ -100,7 +100,7 @@ func (o *OrderService) computerCommission(orderId int64, order *table.Order) {
 	c.UserId = o.user.InviterId
 	c.OrderId = orderId
 	c.Type = table.AddCommissionType
-	c.Change = float64(order.PayActualPrice) * float64(0.3) / 100
+	c.Change = float64(order.PayActualPrice) * float64(0.3)
 
 	err := mysql.InsertCommission(c)
 	if err != nil {
