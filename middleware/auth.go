@@ -49,6 +49,16 @@ func AdminRequired() gin.HandlerFunc {
 
 		token, ok := c.GetQuery("token")
 		if !ok {
+			token1, ok1 := c.GetPostForm("token")
+			if !ok1 {
+				c.JSON(200, response.NewResponse(errcode.CodeTokenError, nil, errcode.Text(errcode.CodeTokenError)))
+				c.Abort()
+				return
+			}
+			token = token1
+		}
+
+		if token == "" {
 			c.JSON(200, response.NewResponse(errcode.CodeTokenError, nil, errcode.Text(errcode.CodeTokenError)))
 			c.Abort()
 			return
