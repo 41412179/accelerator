@@ -1,6 +1,8 @@
 set -x
 git pull
 # 启动正式环境
+export GOROOT=/usr/local/go
+export PATH=$PATH:$GOROOT/bin
 export GIN_MODE=release
 go mod tidy
 go build
