@@ -5,6 +5,7 @@ import (
 	"accelerator/util"
 	"os"
 
+	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
 
@@ -24,8 +25,14 @@ var PayConf *Conf
 
 // Init 初始化配置项
 func (c *Conf) Init() {
+
 	// 从本地读取环境变量
-	godotenv.Load(".env.example")
+	if gin.Mode() == gin.ReleaseMode {
+		godotenv.Load(".env.pro")
+	}
+	if gin.Mode() == gin.DebugMode {
+		godotenv.Load(".env.test")
+	}
 
 	// 设置日志级别
 	util.BuildLogger(os.Getenv("LOG_LEVEL"))
