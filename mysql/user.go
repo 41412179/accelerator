@@ -32,7 +32,7 @@ func GetUserByID(id int64) (*table.User, error) {
 
 func GetUserLikeEmail(email string) ([]*table.User, error) {
 	var users []*table.User
-	if err := db.DB.Where("email LIKE ?", email+"%").Find(&users).Error; err != nil {
+	if err := db.DB.Where("email =", email).Find(&users).Error; err != nil {
 		return nil, err
 	}
 	return users, nil
