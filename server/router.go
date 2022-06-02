@@ -63,7 +63,7 @@ func NewRouter() *gin.Engine {
 			// 查询我的佣金统计
 			auth.GET("self/commission", api.GetCommissionByUser)
 			// 查询佣金明细
-			auth.GET("withdraw", api.WithdrawByUser)
+			auth.POST("withdraw", api.WithdrawByUser)
 			// 查询剩余时长
 			auth.GET("expire/time", api.GetExpireTime)
 
