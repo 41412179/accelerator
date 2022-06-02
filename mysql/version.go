@@ -18,5 +18,6 @@ func EditVersion(version string, url, desc string, id int64) (*table.Version, er
 	if err := db.DB.Model(&versionObj).Where("id = ?", id).Update("version", version).Update("url", url).Update("desc", desc).Error; err != nil {
 		return nil, err
 	}
+	versionObj.Id = int(id)
 	return &versionObj, nil
 }
