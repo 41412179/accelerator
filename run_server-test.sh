@@ -1,5 +1,6 @@
 set -x
 git pull
+go mod tidy
 go build
 pid=$(ps -ef | grep "./accelerator" | grep -v 'grep' | awk '{print $2}')
 if [ $pid -gt 0 ]; then
