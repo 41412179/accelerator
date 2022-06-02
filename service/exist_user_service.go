@@ -14,7 +14,7 @@ type ExistUserService struct {
 }
 
 func (e *ExistUserService) ExistUser(g *gin.Context) response.Response {
-	user, err := mysql.GetUserLikeEmail(e.Qq)
+	user, err := mysql.GetUserLikeEmail(e.Qq + "@")
 	if err != nil {
 		util.Log().Error("exist user err: %v", err)
 		return response.NewResponse(errcode.CodeUserNotExist, nil, errcode.Text(errcode.CodeUserNotExist))
