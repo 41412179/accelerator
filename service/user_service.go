@@ -118,6 +118,7 @@ func (u *UserService) createNewUser() *table.User {
 	user.Email = u.Email
 	user.ChannelId = u.ChannelId
 	user.Source = u.Source
+	user.InviterId = u.InviterId
 	return user
 }
 
