@@ -1,4 +1,4 @@
-MYSQL_DSN="aispeed:Lyj880230@tcp(rm-j6cp5q4e3l3w80hf5.mysql.rds.aliyuncs.com:3306)/accelerator?charset=utf8&parseTime=True&loc=Local"
+MYSQL_DSN="aispeed:Lyj880230@tcp(rm-j6cp5q4e3l3w80hf5wo.mysql.rds.aliyuncs.com:3306)/accelerator?charset=utf8&parseTime=True&loc=Local"
 REDIS_ADDR="127.0.0.1:6379"
 REDIS_PW=""
 REDIS_DB=""
