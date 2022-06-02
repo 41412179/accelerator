@@ -10,11 +10,12 @@ import (
 type EditVersionService struct {
 	Version string `json:"version" form:"version" binding:"required"`
 	URL     string `json:"url" form:"url" binding:"required"`
+	Desc    string `json:"desc" form:"desc" binding:"required"`
 	ID      int64  `json:"id" form:"id" binding:"required"`
 }
 
 func (v *EditVersionService) EditVersion() response.Response {
-	version, err := mysql.EditVersion(v.Version, v.URL, v.ID)
+	version, err := mysql.EditVersion(v.Version, v.URL, v.Desc, v.ID)
 	if err != nil {
 		util.Log().Error("edit version err: %v", err)
 		return response.NewResponse(errcode.CodeDBError, nil, errcode.Text(errcode.CodeDBError))
