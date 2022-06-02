@@ -12,7 +12,8 @@ type EditVersionService struct {
 	URL     string `json:"url" form:"url" binding:"required"`
 	Desc    string `json:"desc" form:"desc" binding:"required"`
 	ID      int64  `json:"id" form:"id" binding:"required"`
-	CodeID  string `json:"code_id" form:"code_id" binding:"required"`
+	// CodeID  string `json:"code_id" form:"code_id" binding:"required"`
+	CodeID int `json:"code_id" form:"code_id" binding:"required"`
 }
 
 func (v *EditVersionService) EditVersion() response.Response {

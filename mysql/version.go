@@ -13,7 +13,7 @@ func GetVersion() (*table.Version, error) {
 	return &version, nil
 }
 
-func EditVersion(version string, url, desc, codeID string, id int64) (*table.Version, error) {
+func EditVersion(version string, url, desc string, codeID, id int64) (*table.Version, error) {
 	var versionObj table.Version
 	if err := db.DB.Model(&versionObj).Where("id = ?", id).Update("version", version).Update("url", url).Update("desc", desc).Update("code_id", codeID).Error; err != nil {
 		return nil, err
