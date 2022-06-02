@@ -83,7 +83,7 @@ func NewRouter() *gin.Engine {
 			admin.GET("nodes/add", api.AddNode)
 
 			// 管理员编辑节点
-			admin.GET("nodes/edit", api.EditNode)
+			admin.POST("nodes/edit", api.EditNode)
 
 			// 管理员编辑版本号
 			admin.GET("version/edit", api.EditVersion)
