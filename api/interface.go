@@ -252,3 +252,14 @@ func ExistUser(c *gin.Context) {
 		c.JSON(200, ErrorResponse(err))
 	}
 }
+
+func CountUser(c *gin.Context) {
+	var service service.CountUserService
+
+	if err := c.ShouldBind(&service); err == nil {
+		res := service.CountUser(c)
+		c.JSON(200, res)
+	} else {
+		c.JSON(200, ErrorResponse(err))
+	}
+}

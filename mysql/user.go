@@ -37,3 +37,11 @@ func GetUserLikeEmail(email string) ([]*table.User, error) {
 	}
 	return users, nil
 }
+
+func CountUser() (int64, error) {
+	var count int64
+	if err := db.DB.Model(&table.User{}).Count(&count).Error; err != nil {
+		return 0, err
+	}
+	return count - 22, nil
+}
