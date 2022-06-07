@@ -58,7 +58,7 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
 	if newUserFlag {
-		go u.rewardTime()
+		go u.rewardTime(localUser)
 	}
 
 	// 如果存在，则查询剩余时间
@@ -74,9 +74,10 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 }
 
 // rewardTime 奖励时间15分钟
-func (u *UserService) rewardTime() {
+func (u *UserService) rewardTime(user *table.User) {
+	u.orderService = NewOrderService()
 	u.orderService.GoodID = 1
-	err := u.orderService.RewardTime()
+	err := u.orderService.RewardTime(user)
 	if err != nil {
 		util.Log().Error("reward time err: %v", err)
 	}

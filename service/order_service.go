@@ -89,7 +89,8 @@ func (o *OrderService) CreateOrder(c *gin.Context) response.Response {
 }
 
 // RewardTime 奖励时间
-func (o *OrderService) RewardTime() error {
+func (o *OrderService) RewardTime(user *table.User) error {
+	o.user = user
 	order, _, err := o.generateOrder()
 	if err != nil {
 		util.Log().Error("generate order err: %+v", err)
