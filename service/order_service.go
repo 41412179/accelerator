@@ -88,6 +88,31 @@ func (o *OrderService) CreateOrder(c *gin.Context) response.Response {
 
 }
 
+// RewardTime 奖励时间
+func (o *OrderService) RewardTime() error {
+	order, _, err := o.generateOrder()
+	if err != nil {
+		util.Log().Error("generate order err: %+v", err)
+		return err
+	}
+	if order == nil {
+		util.Log().Error("generate order err, orderInfo: %+v", o)
+		return err
+	}
+	order.OutTradeNo = "reward"
+	order.PayActualPrice = 0
+	order.Status = mysql.OrderStatusPaid
+	order.EndTime = time.Now().Add(time.Duration(15 * time.Minute))
+
+	// 创建订单
+	_, err = mysql.InsertOrder(order)
+	if err != nil {
+		util.Log().Error("insert order err: %+v", err)
+		return err
+	}
+	return nil
+}
+
 // computerCommission 计算佣金
 func (o *OrderService) computerCommission(orderId int64, order *table.Order) {
 	// 如果没有被邀请人，则不计算佣金

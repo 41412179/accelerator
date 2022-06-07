@@ -30,6 +30,7 @@ func NewUserService() *UserService {
 
 // Login 用户登录函数
 func (u *UserService) Login(c *gin.Context) response.Response {
+	newUserFlag := false
 
 	// 设置session
 	// service.setSession(c, user)
@@ -38,6 +39,7 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 
 	// 判断用户是否存在
 	if err == gorm.ErrRecordNotFound {
+		newUserFlag = true
 		user := u.createNewUser()
 		_, err := mysql.InsertUser(user)
 		if err != nil {
@@ -55,6 +57,9 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 		util.Log().Error("get user by email err: %v", err)
 		return errcode.NewErr(errcode.CodeDBError, err)
 	}
+	if newUserFlag {
+		go u.rewardTime()
+	}
 
 	// 如果存在，则查询剩余时间
 	remainingTime, err := u.orderService.GetRemainingTimeByUserId(localUser.ID)
@@ -66,6 +71,15 @@ func (u *UserService) Login(c *gin.Context) response.Response {
 	// 查询token
 	u.getTokenByUserID(localUser.ID)
 	return u.setRsponse(localUser, remainingTime)
+}
+
+// rewardTime 奖励时间15分钟
+func (u *UserService) rewardTime() {
+	u.orderService.GoodID = 1
+	err := u.orderService.RewardTime()
+	if err != nil {
+		util.Log().Error("reward time err: %v", err)
+	}
 }
 
 // getTokenByUserID 根据用户id获取token
