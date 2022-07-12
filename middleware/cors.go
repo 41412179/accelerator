@@ -20,5 +20,6 @@ func Cors() gin.HandlerFunc {
 		config.AllowOrigins = []string{"http://apitest.ainet.site", "http://ainet.site", "http://www.ainet.site", "http://test.ainet.site:3000", "http://testgame.qaqdog.com"}
 	}
 	config.AllowCredentials = true
+	config.AddAllowMethods("*")
 	return cors.New(config)
 }
