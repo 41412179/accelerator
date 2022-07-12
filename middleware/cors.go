@@ -15,9 +15,9 @@ func Cors() gin.HandlerFunc {
 		config.AllowOrigins = []string{"https://api.ainet.vip",
 			"https://ainet.site", "https://www.ainet.site",
 			"https://qaqdog.com", "http://admin.ainet.vip",
-			"https://gamebox.qaqdog.com", "http://lol3.qaqdog.com"}
+			"https://gamebox.qaqdog.com", "http://lol3.qaqdog.com", "http://testgame.qaqdog.com"}
 	} else {
-		config.AllowOrigins = []string{"http://apitest.ainet.site", "http://ainet.site", "http://www.ainet.site", "http://test.ainet.site:3000"}
+		config.AllowOrigins = []string{"http://apitest.ainet.site", "http://ainet.site", "http://www.ainet.site", "http://test.ainet.site:3000", "http://testgame.qaqdog.com"}
 	}
 	config.AllowCredentials = true
 	return cors.New(config)
