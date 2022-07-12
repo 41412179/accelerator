@@ -53,6 +53,7 @@ func NewRouter() *gin.Engine {
 		v1.GET("geos", api.GetGeos)
 
 		v1.GET("exist/user", api.ExistUser)
+		v1.OPTIONS("exist/user", api.ExistUser)
 
 		v1.GET("sum/user", api.CountUser)
 
